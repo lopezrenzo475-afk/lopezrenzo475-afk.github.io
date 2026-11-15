@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Odontología Nívea: proyecto conceptual de web para clínica dental.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f3cff'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%23ff6a3d'/%3E%3C/svg%3E">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Odontología Nívea</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: airy clinical calm. Arch-masked photo hero with floating status cards, a whitening simulator built on the VITA shade guide,
+   a live quote calculator with installments, then visit steps, FAQ and booking. */
+:root{
+  --bg:#f2f7f5;--surface:#ffffff;--soft:#e2f0eb;--ink:#0f2d27;--muted:#56716a;--accent:#0f7a63;--accent-2:#ffb48a;--line:#d3e3dd;--on-accent:#ffffff;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  --shadow:0 30px 60px -36px rgba(15,45,39,.45);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1916;--surface:#11231f;--soft:#163029;--ink:#e4f2ed;--muted:#94b1a9;--accent:#4cc5a5;--accent-2:#ffb48a;--line:#22413a;--on-accent:#05211a;--shadow:0 30px 60px -30px rgba(0,0,0,.7);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1916;--surface:#11231f;--soft:#163029;--ink:#e4f2ed;--muted:#94b1a9;--accent:#4cc5a5;--accent-2:#ffb48a;--line:#22413a;--on-accent:#05211a;--shadow:0 30px 60px -30px rgba(0,0,0,.7);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.02;margin:0;letter-spacing:-.025em}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:var(--accent);margin:0 0 14px}
+.eyebrow::before{content:"";width:18px;height:2px;background:currentColor;border-radius:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:700;background:var(--accent);color:var(--on-accent);border:0;border-radius:999px;padding:15px 24px;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px -14px var(--accent)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{box-shadow:none;border-color:var(--ink)}
+.demo{background:var(--soft);font-size:12px;text-align:center;padding-block:7px;color:var(--muted);font-weight:600}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:20px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-weight:800;font-size:23px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.logo svg{width:28px;height:28px}
+.logo span{color:var(--accent)}
+nav{display:flex;gap:22px;flex-wrap:wrap;font-size:15px;font-weight:600}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding-block:28px 80px}
+.hero h1{font-size:clamp(42px,6.2vw,78px);font-weight:800}
+.hero h1 em{font-style:normal;color:var(--accent);position:relative;white-space:nowrap}
+.hero h1 em svg{position:absolute;left:0;bottom:-.12em;width:100%;height:.3em;overflow:visible}
+.hero h1 em path{stroke:var(--accent-2);stroke-width:6;fill:none;stroke-linecap:round;stroke-dasharray:400;stroke-dashoffset:0;animation:draw 1.4s .4s cubic-bezier(.6,0,.2,1) both}
+@keyframes draw{from{stroke-dashoffset:400}}
+.hero .lead{font-size:19px;color:var(--muted);max-width:48ch;margin:24px 0 32px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.trust{display:flex;gap:32px;margin-top:40px;flex-wrap:wrap}
+.trust div{font-size:14px;color:var(--muted)}
+.trust b{display:block;font-family:var(--display);font-size:30px;color:var(--ink);font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.visual{position:relative;max-width:100%}
+.arch{border-radius:260px 260px 28px 28px;overflow:hidden;aspect-ratio:4/5;box-shadow:var(--shadow);background:var(--soft)}
+.arch img{width:100%;height:115%;object-fit:cover;will-change:transform}
+.float{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center;font-size:14px;animation:bob 6s ease-in-out infinite}
+.float b{display:block;font-size:15px}
+.float small{color:var(--muted)}
+.float .dot{width:38px;height:38px;border-radius:12px;background:var(--soft);display:grid;place-items:center;color:var(--accent);flex:none}
+.f1{left:-36px;bottom:70px}
+.f2{right:-24px;top:60px;animation-delay:-3s}
+.live{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:6px;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+@keyframes bob{50%{transform:translateY(-10px)}}
+
+section{padding-block:clamp(72px,9vw,120px)}
+.h2{font-size:clamp(34px,4.6vw,56px);font-weight:800;margin-bottom:18px}
+.sub{color:var(--muted);font-size:18px;max-width:56ch;margin:0 0 40px}
+
+/* whitening simulator */
+.sim{background:var(--surface);border-block:1px solid var(--line)}
+.sim-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+.ba{position:relative;aspect-ratio:16/10;border-radius:28px;overflow:hidden;background:#3a1418;box-shadow:var(--shadow);user-select:none;touch-action:pan-y}
+.ba svg{position:absolute;inset:0;width:100%;height:100%}
+.ba .after{clip-path:inset(0 0 0 var(--pos,50%))}
+.ba .handle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:3px;background:#fff;transform:translateX(-50%);pointer-events:none}
+.ba .handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:#fff;color:#0f2d27;display:grid;place-items:center;font-size:20px;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.ba .lbl{position:absolute;top:16px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.35);padding:6px 12px;border-radius:999px;backdrop-filter:blur(4px)}
+.ba .l1{left:16px}.ba .l2{right:16px}
+.shades{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 22px}
+.shade{font:inherit;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:8px 10px 10px;cursor:pointer;display:grid;gap:6px;justify-items:center;min-width:64px;font-weight:700;font-size:13px}
+.shade i{width:34px;height:44px;border-radius:12px 12px 16px 16px;display:block;box-shadow:inset 0 -6px 10px rgba(0,0,0,.08)}
+.shade[aria-pressed=true]{border-color:var(--accent);background:var(--soft)}
+.gain{font-family:var(--display);font-size:64px;font-weight:800;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums}
+.gain small{font-family:var(--body);font-size:16px;color:var(--muted);font-weight:600;margin-left:6px}
+.fine{font-size:13px;color:var(--muted);margin-top:14px}
+
+/* quote */
+.quote{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
+.items{display:grid;gap:12px}
+.item{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;transition:border-color .2s,background .2s}
+.item.on{border-color:var(--accent);background:var(--soft)}
+.item input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);margin:0}
+.item label{cursor:pointer;min-width:0}
+.item b{display:block;font-size:17px}
+.item small{color:var(--muted)}
+.item .p{font-family:var(--display);font-weight:800;font-size:19px;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.qty{display:inline-flex;align-items:center;gap:4px;margin-top:6px}
+.qty button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font:inherit;font-weight:700}
+.qty output{min-width:24px;text-align:center;font-weight:700}
+.total{position:sticky;top:24px;background:var(--ink);color:var(--bg);border-radius:24px;padding:28px;display:grid;gap:14px}
+.total .k{font-size:12px;text-transform:uppercase;letter-spacing:.14em;opacity:.7;font-weight:700}
+.total .big{font-family:var(--display);font-size:52px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.total .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(127,160,150,.35);padding-top:14px}
+.total .row b{font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums}
+.total .btn{background:var(--accent);color:var(--on-accent)}
+.total .fine{color:inherit;opacity:.7;margin:0}
+.seg{display:flex;background:rgba(127,160,150,.18);border-radius:999px;padding:4px}
+.seg button{flex:1;font:inherit;font-size:13px;font-weight:700;border:0;border-radius:999px;padding:8px;background:none;color:inherit;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--bg);color:var(--ink)}
+
+/* steps + photo */
+.visit{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.visit .ph{border-radius:28px;overflow:hidden;box-shadow:var(--shadow);aspect-ratio:3/2}
+.visit .ph img{width:100%;height:100%;object-fit:cover}
+.tl{display:grid;gap:0;position:relative}
+.tl::before{content:"";position:absolute;left:19px;top:20px;bottom:20px;width:2px;background:var(--line)}
+.tl .s{display:grid;grid-template-columns:40px minmax(0,1fr);gap:18px;padding-block:14px;position:relative}
+.tl .n{width:40px;height:40px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-weight:800;font-family:var(--display);z-index:1}
+.tl h3{font-size:22px;margin-bottom:4px}
+.tl p{margin:0;color:var(--muted)}
+.tl .min{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em}
+
+/* faq + booking */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+details{border-bottom:1px solid var(--line);padding-block:18px}
+summary{cursor:pointer;font-weight:700;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::after{content:"+";font-size:24px;line-height:1;color:var(--accent);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);margin:10px 0 0}
+.book{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:32px;box-shadow:var(--shadow)}
+.book h3{font-size:28px;margin-bottom:6px}
+.book>p{color:var(--muted);margin:0 0 20px}
+form{display:grid;gap:14px}
+label.f{font-size:13px;font-weight:700;display:grid;gap:6px}
+.inp{font:inherit;font-size:15px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ok{font-size:14px;background:var(--soft);border-radius:12px;padding:12px;margin:0}
+footer{border-top:1px solid var(--line);padding-block:36px;color:var(--muted);font-size:13px}
+footer .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-bottom:24px}
+footer h4{margin:0 0 4px;color:var(--ink);font-size:14px}
+footer p{margin:0}
+
+@media (max-width:900px){
+  .hero .wrap,.sim-grid,.quote,.visit,.split{grid-template-columns:1fr}
+  .total{position:relative;top:auto}
+  .f1{left:8px;bottom:20px}.f2{right:8px;top:20px}
+  .visual{max-width:460px;margin:0 auto;width:100%}
+  footer .cols{grid-template-columns:1fr}
+}
+@media (max-width:420px){.r2{grid-template-columns:1fr}.float{font-size:12px;padding:10px 12px}.float .dot{display:none}}
+@media (prefers-reduced-motion:reduce){.float,.live{animation:none}.hero h1 em path{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<div class="demo">Ejemplo de portfolio · clínica ficticia · datos de contacto y precios ilustrativos</div>
+
+<header class="top"><div class="wrap">
+  <div class="logo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 4c-4 0-6 3-6 7 0 6 3 8 4 13 .6 3 1.4 5 3 5 2 0 2-6 6-6s4 6 6 6c1.6 0 2.4-2 3-5 1-5 4-7 4-13 0-4-2-7-6-7-3 0-4 2-7 2S12 4 9 4z" fill="currentColor" opacity=".18"/><path d="M9 4c-4 0-6 3-6 7 0 6 3 8 4 13 .6 3 1.4 5 3 5 2 0 2-6 6-6s4 6 6 6c1.6 0 2.4-2 3-5 1-5 4-7 4-13 0-4-2-7-6-7-3 0-4 2-7 2S12 4 9 4z" fill="none" stroke="var(--accent)" stroke-width="2"/></svg>Odontología <span>Nívea</span></div>
+  <nav><a href="#simulador">Blanqueamiento</a><a href="#presupuesto">Presupuesto</a><a href="#visita">Tu visita</a><a href="#turno">Turnos</a></nav>
+</div></header>
+
+<div class="hero"><div class="wrap">
+  <div>
+    <p class="eyebrow">Clínica dental familiar</p>
+    <h1>Una sonrisa que <em>te den ganas<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14 C 80 4, 200 4, 296 12"/></svg></em> de mostrar.</h1>
+    <p class="lead">Diagnóstico completo, radiografía panorámica y presupuesto por escrito en tu primera visita de 40 minutos. Sin sorpresas y hasta en 12 cuotas.</p>
+    <div class="ctas"><a class="btn" href="#turno">Pedir turno</a><a class="btn ghost" href="#simulador">Probar el simulador</a></div>
+    <div class="trust">
+      <div><b data-n="40">40 min</b>primera consulta</div>
+      <div><b>12 cuotas</b>en tratamientos</div>
+      <div><b>Lun–Sáb</b>9 a 20 h</div>
+    </div>
+  </div>
+  <div class="visual">
+    <div class="arch"><img id="heroImg" src="img/sala.webp" alt="Consultorio luminoso con sillón odontológico" fetchpriority="high"></div>
+    <div class="float f1"><span class="dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><small><span class="live"></span>Próximo turno libre</small><b>Hoy, 18:30</b></div></div>
+    <div class="float f2"><span class="dot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><small>Presupuesto</small><b>Por escrito, al salir</b></div></div>
+  </div>
+</div></div>
+
+<section class="sim" id="simulador"><div class="wrap sim-grid">
+  <div class="ba" id="ba" style="--pos:50%">
+    <svg class="before" id="svgBefore" viewBox="0 0 800 500" aria-hidden="true"></svg>
+    <svg class="after" id="svgAfter" viewBox="0 0 800 500" aria-hidden="true"></svg>
+    <span class="lbl l1">Antes · A3.5</span><span class="lbl l2" id="afterLbl">Después · B1</span>
+    <div class="handle"></div>
+    <input type="range" id="baRange" min="0" max="100" value="50" aria-label="Deslizá para comparar antes y después">
+  </div>
+  <div>
+    <p class="eyebrow">Simulador de blanqueamiento</p>
+    <h2 class="h2">Deslizá y mirá la diferencia.</h2>
+    <p style="color:var(--muted);margin:0 0 18px">Elegí el tono final en la guía VITA, la misma que usa tu odontólogo para medir el color de tus dientes.</p>
+    <div class="shades" id="shades"></div>
+    <div class="gain"><span id="gain">11</span><small>tonos más claro</small></div>
+    <p class="fine">Simulación ilustrativa. El resultado real depende de cada paciente y se evalúa en la consulta.</p>
+  </div>
+</div></section>
+
+<section id="presupuesto"><div class="wrap">
+  <p class="eyebrow">Presupuesto en 30 segundos</p>
+  <h2 class="h2">Sabé cuánto vas a pagar antes de venir.</h2>
+  <p class="sub">Marcá lo que necesitás. Es un estimado: el presupuesto final lo confirmamos después del diagnóstico.</p>
+  <div class="quote">
+    <div class="items" id="items"></div>
+    <aside class="total" aria-live="polite">
+      <div class="k">Total estimado</div>
+      <div class="big" id="tot">$ 0</div>
+      <div class="seg" id="plan"><button type="button" data-c="1" aria-pressed="false">1 pago</button><button type="button" data-c="6" aria-pressed="false">6 cuotas</button><button type="button" data-c="12" aria-pressed="true">12 cuotas</button></div>
+      <div class="row"><span id="cuotaK">12 cuotas sin interés de</span><b id="cuota">$ 0</b></div>
+      <a class="btn" href="#turno">Reservar diagnóstico</a>
+      <p class="fine">Precios ilustrativos de un negocio ficticio.</p>
+    </aside>
+  </div>
+</div></section>
+
+<section id="visita" style="background:var(--surface);border-block:1px solid var(--line)"><div class="wrap visit">
+  <div class="ph"><img src="img/paciente.webp" alt="Odontóloga conversando con un niño antes de la consulta" loading="lazy"></div>
+  <div>
+    <p class="eyebrow">Tu primera visita</p>
+    <h2 class="h2">40 minutos, cuatro pasos.</h2>
+    <div class="tl">
+      <div class="s"><div class="n">1</div><div><span class="min">5 min</span><h3>Charla</h3><p>Nos contás qué te molesta y qué te gustaría cambiar.</p></div></div>
+      <div class="s"><div class="n">2</div><div><span class="min">10 min</span><h3>Panorámica</h3><p>Radiografía digital en el mismo consultorio, sin traslados.</p></div></div>
+      <div class="s"><div class="n">3</div><div><span class="min">15 min</span><h3>Revisión completa</h3><p>Encías, caries, mordida y color, diente por diente.</p></div></div>
+      <div class="s"><div class="n">4</div><div><span class="min">10 min</span><h3>Plan por escrito</h3><p>Te llevás cada tratamiento con su precio y las opciones de pago.</p></div></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="turno"><div class="wrap split">
+  <div>
+    <p class="eyebrow">Antes de venir</p>
+    <h2 class="h2">Preguntas frecuentes</h2>
+    <details open><summary>¿Atienden prepagas?</summary><p>Trabajamos con las principales. Si la tuya no está, te damos factura para pedir el reintegro.</p></details>
+    <details><summary>¿Qué hago si tengo una urgencia?</summary><p>Escribinos por WhatsApp con la palabra URGENCIA y te damos el primer turno libre del día.</p></details>
+    <details><summary>¿El blanqueamiento duele?</summary><p>Puede dar sensibilidad leve por 24 a 48 horas. Te damos un gel para calmarla.</p></details>
+    <details><summary>¿Atienden a niños?</summary><p>Sí, desde los 3 años. La primera visita es de reconocimiento, para que se sientan cómodos.</p></details>
+  </div>
+  <div class="book">
+    <h3>Pedí tu turno</h3>
+    <p>Te confirmamos por WhatsApp en menos de 2 horas hábiles.</p>
+    <form id="turnoForm">
+      <label class="f" for="nombre">Nombre y apellido<input class="inp" id="nombre" required value="Lucía Fernández"></label>
+      <label class="f" for="tel">WhatsApp<input class="inp" id="tel" type="tel" required value="+54 9 11 0000 0000"></label>
+      <div class="r2">
+        <label class="f" for="motivo">Motivo<select class="inp" id="motivo"><option>Control y limpieza</option><option>Dolor o urgencia</option><option selected>Blanqueamiento</option><option>Ortodoncia</option><option>Implantes</option></select></label>
+        <label class="f" for="franja">Horario<select class="inp" id="franja"><option>Mañana</option><option selected>Tarde</option><option>Sábado</option></select></label>
+      </div>
+      <button class="btn" type="submit">Pedir turno</button>
+      <p class="ok" id="ok" hidden>Esto es una demo: el formulario no envía datos. En la versión real, el pedido llega al WhatsApp de la clínica.</p>
+    </form>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="cols">
+    <div><h4>Dirección</h4><p>Av. Ejemplo 1234, piso 2</p></div>
+    <div><h4>WhatsApp</h4><p>+54 9 11 0000 0000</p></div>
+    <div><h4>Horario</h4><p>Lun a Vie 9–20 h · Sáb 9–14 h</p></div>
+  </div>
+  <p>Diseño de muestra para portfolio. Odontología Nívea es una clínica ficticia. Fotos de Wikimedia Commons: Shixart1985, CC BY 2.0.</p>
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fmt=function(n){return '$ '+Math.round(n).toLocaleString('es-AR');};
+
+  /* smile drawing */
+  function smile(c){
+    var up='',lo='',i,ws=[54,62,70,92,92,70,62,54],x=400-ws.reduce(function(a,b){return a+b+4},0)/2;
+    for(i=0;i<8;i++){var w=ws[i],h=(i===3||i===4)?150:(i===2||i===5)?138:122,y=250-h+ (i<2||i>5?14:0);
+      up+='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+(h+20)+'" rx="'+(w*.32)+'" fill="'+c+'"/>';
+      up+='<rect x="'+(x+w*.18)+'" y="'+(y+18)+'" width="'+(w*.22)+'" height="'+(h*.55)+'" rx="'+(w*.11)+'" fill="#fff" opacity=".28"/>';x+=w+4;}
+    var lw=[56,60,66,66,60,56];x=400-lw.reduce(function(a,b){return a+b+4},0)/2;
+    for(i=0;i<6;i++){lo+='<rect x="'+x+'" y="262" width="'+lw[i]+'" height="96" rx="'+(lw[i]*.3)+'" fill="'+c+'" style="filter:brightness(.93)"/>';x+=lw[i]+4;}
+    return '<defs><clipPath id="m'+c.slice(1)+'"><path d="M120 250 C 200 110, 600 110, 680 250 C 600 400, 200 400, 120 250Z"/></clipPath>'+
+      '<radialGradient id="g'+c.slice(1)+'" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#e98c8c"/><stop offset="1" stop-color="#9c3b44"/></radialGradient></defs>'+
+      '<rect width="800" height="500" fill="url(#g'+c.slice(1)+')"/>'+
+      '<path d="M60 250 C 180 60, 620 60, 740 250 C 620 470, 180 470, 60 250Z" fill="#c95f66"/>'+
+      '<path d="M120 250 C 200 110, 600 110, 680 250 C 600 400, 200 400, 120 250Z" fill="#3b0d14"/>'+
+      '<g clip-path="url(#m'+c.slice(1)+')"><rect x="100" y="80" width="600" height="60" fill="#d8737b"/>'+up+lo+
+      '<rect x="100" y="352" width="600" height="60" fill="#d8737b"/></g>'+
+      '<path d="M120 250 C 200 110, 600 110, 680 250 C 600 400, 200 400, 120 250Z" fill="none" stroke="#a9434c" stroke-width="10"/>';
+  }
+  var vita=['B1','A1','B2','D2','A2','C1','C2','D4','A3','D3','B3','A3.5','B4','C3','A4','C4'];
+  var shades=[{k:'B1',c:'#f3ecdc'},{k:'A1',c:'#efe2c4'},{k:'A2',c:'#e8d5ad'},{k:'A3',c:'#e1c999'}];
+  var before='#d9bc85';
+  document.getElementById('svgBefore').innerHTML=smile(before);
+  var after=document.getElementById('svgAfter'),wrap=document.getElementById('shades');
+  function setShade(s){after.innerHTML=smile(s.c);document.getElementById('afterLbl').textContent='Después · '+s.k;
+    var g=vita.indexOf('A3.5')-vita.indexOf(s.k);document.getElementById('gain').textContent=g;
+    [].forEach.call(wrap.children,function(b){b.setAttribute('aria-pressed',b.dataset.k===s.k);});}
+  shades.forEach(function(s){var b=document.createElement('button');b.type='button';b.className='shade';b.dataset.k=s.k;
+    b.innerHTML='<i style="background:'+s.c+'"></i>'+s.k;b.addEventListener('click',function(){setShade(s);});wrap.appendChild(b);});
+  setShade(shades[0]);
+  var ba=document.getElementById('ba'),r=document.getElementById('baRange');
+  r.addEventListener('input',function(){ba.style.setProperty('--pos',r.value+'%');});
+
+  /* quote */
+  var T=[
+    {n:'Consulta + panorámica',d:'Diagnóstico y plan escrito',p:25000,on:true},
+    {n:'Limpieza y flúor',d:'Recomendada cada 6 meses',p:38000,on:true},
+    {n:'Arreglo de caries',d:'Resina del color del diente, por pieza',p:45000,q:2},
+    {n:'Blanqueamiento',d:'En consultorio, 1 sesión',p:180000,on:true},
+    {n:'Placa de descanso',d:'Para quienes aprietan los dientes',p:95000},
+    {n:'Ortodoncia invisible',d:'Alineadores, tratamiento completo',p:1450000}
+  ];
+  var box=document.getElementById('items'),cuotas=12;
+  T.forEach(function(t,i){t.qty=t.q||1;var el=document.createElement('div');el.className='item'+(t.on?' on':'');
+    el.innerHTML='<input type="checkbox" id="t'+i+'"'+(t.on?' checked':'')+'><label for="t'+i+'"><b>'+t.n+'</b><small>'+t.d+'</small></label>'+
+      '<div><div class="p" id="p'+i+'">'+fmt(t.p*t.qty)+'</div>'+(t.q?'<div class="qty"><button type="button" aria-label="Menos piezas">−</button><output>'+t.qty+'</output><button type="button" aria-label="Más piezas">+</button></div>':'')+'</div>';
+    box.appendChild(el);
+    el.querySelector('input').addEventListener('change',function(e){t.on=e.target.checked;el.classList.toggle('on',t.on);calc();});
+    if(t.q){var bs=el.querySelectorAll('.qty button'),o=el.querySelector('.qty output');
+      bs[0].onclick=function(){t.qty=Math.max(1,t.qty-1);o.textContent=t.qty;document.getElementById('p'+i).textContent=fmt(t.p*t.qty);calc();};
+      bs[1].onclick=function(){t.qty=Math.min(12,t.qty+1);o.textContent=t.qty;document.getElementById('p'+i).textContent=fmt(t.p*t.qty);calc();};}
+  });
+  var shown=0,totEl=document.getElementById('tot');
+  function calc(){var s=T.reduce(function(a,t){return a+(t.on?t.p*t.qty:0)},0);
+    document.getElementById('cuota').textContent=fmt(s/cuotas);
+    document.getElementById('cuotaK').textContent=cuotas===1?'Pago único de':cuotas+' cuotas sin interés de';
+    if(reduce){totEl.textContent=fmt(s);shown=s;return;}
+    var from=shown,t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/450);k=1-Math.pow(1-k,3);shown=from+(s-from)*k;totEl.textContent=fmt(shown);if(k<1)requestAnimationFrame(f);})(t0);}
+  document.querySelectorAll('#plan button').forEach(function(b){b.addEventListener('click',function(){cuotas=+b.dataset.c;
+    document.querySelectorAll('#plan button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});calc();});});
+  shown=T.reduce(function(a,t){return a+(t.on?t.p*t.qty:0)},0);totEl.textContent=fmt(shown);calc();
+
+  /* form */
+  document.getElementById('turnoForm').addEventListener('submit',function(e){e.preventDefault();document.getElementById('ok').hidden=false;});
+
+  /* scroll motion */
+  if(window.gsap&&window.ScrollTrigger&&!reduce){
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.fromTo('#heroImg',{yPercent:0},{yPercent:-12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+    gsap.utils.toArray('.tl .s').forEach(function(s){gsap.fromTo(s,{x:16},{x:0,ease:'power2.out',scrollTrigger:{trigger:s,start:'top 90%',end:'top 60%',scrub:true}});});
+    /* hint the slider once it comes into view */
+    ScrollTrigger.create({trigger:'#ba',start:'top 70%',once:true,onEnter:function(){
+      var o={v:50};gsap.timeline().to(o,{v:22,duration:.8,ease:'power2.inOut',onUpdate:u}).to(o,{v:78,duration:1.1,ease:'power2.inOut',onUpdate:u}).to(o,{v:50,duration:.8,ease:'power2.inOut',onUpdate:u});
+      function u(){ba.style.setProperty('--pos',o.v+'%');r.value=o.v;}}});
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Brasa del Sur: proyecto conceptual de web para parrilla.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f3cff'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%23ff6a3d'/%3E%3C/svg%3E">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Brasa del Sur</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;800;900&family=Libre+Franklin:wght@400;500;700&family=Instrument+Serif:ital@1&display=swap">
+<style>
+/* Layout: a night by the fire. Full-bleed ember hero, sticky three-step fire story, an interactive steak cross-section for doneness,
+   menu with photo-on-hover, film-strip gallery, reservation with a live ticket. Deliberately single dark theme. */
+:root{
+  --bg:#120d0a;--surface:#1d1612;--raise:#2a201a;--ink:#f5ebdf;--muted:#b9a797;--ember:#ff8a3d;--ember-deep:#c2410c;--line:#3a2d24;--on-ember:#1c0d03;
+  --display:"Big Shoulders Display",Impact,"Arial Narrow",sans-serif;
+  --body:"Libre Franklin",ui-sans-serif,system-ui,sans-serif;
+  --serif:"Instrument Serif",Georgia,serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+img{display:block;max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-transform:uppercase;margin:0;line-height:.9;text-wrap:balance;font-weight:900}
+.serif{font-family:var(--serif);font-style:italic;text-transform:none;font-weight:400;color:var(--ember)}
+.eyebrow{text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:var(--ember);margin:0 0 14px;font-weight:700}
+.btn{display:inline-flex;align-items:center;gap:10px;font:inherit;font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:14px;background:var(--ember);color:var(--on-ember);border:0;border-radius:999px;padding:16px 26px;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px -10px var(--ember)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid rgba(245,235,223,.35)}
+.btn.ghost:hover{box-shadow:none;border-color:var(--ink)}
+
+/* demo strip + nav */
+.demo{position:relative;z-index:50;background:var(--ember);color:var(--on-ember);font-size:12px;font-weight:700;text-align:center;padding-block:6px;letter-spacing:.06em;text-transform:uppercase}
+.nav{position:absolute;z-index:40;left:0;right:0}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:.06em;text-transform:uppercase}
+.logo span{color:var(--ember)}
+.nav nav{display:flex;gap:26px;flex-wrap:wrap}
+.nav nav a{color:var(--ink);opacity:.8;text-decoration:none;text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700}
+.nav nav a:hover{opacity:1;color:var(--ember)}
+
+/* hero */
+.hero{position:relative;min-height:640px;height:92svh;max-height:980px;display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+.hero-img{position:absolute;inset:-6% 0 0;z-index:-3}
+.hero-img img{width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1.04)}to{transform:scale(1.16) translate(-1.5%,1%)}}
+.hero::after{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(18,13,10,.55) 0%,rgba(18,13,10,.1) 35%,rgba(18,13,10,.75) 75%,var(--bg) 100%)}
+#sparks{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.glow{position:absolute;z-index:-1;width:520px;height:520px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,138,61,.28),rgba(255,138,61,0) 65%);transform:translate(-50%,-50%);left:70%;top:40%;mix-blend-mode:screen}
+.hero .wrap{width:100%;padding-block:0 56px}
+.hero h1{font-size:clamp(68px,15vw,210px);letter-spacing:-.005em;line-height:.82}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .ln span{display:inline-block;animation:rise 1.1s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 .ln:nth-child(2) span{animation-delay:.12s}
+@keyframes rise{from{transform:translateY(45%);opacity:.15}to{transform:none;opacity:1}}
+.hero h1 .serif{font-size:.62em;letter-spacing:0;line-height:1}
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-top:28px}
+.hero-row p{max-width:42ch;color:var(--ink);opacity:.86;font-size:18px;margin:0}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);overflow:hidden;background:var(--surface)}
+.track{display:flex;width:max-content;animation:mq 38s linear infinite}
+.track span{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(28px,4vw,44px);padding:14px 28px;white-space:nowrap;color:var(--muted)}
+.track span b{color:var(--ember);font-weight:800}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+section{padding-block:clamp(72px,10vw,128px)}
+.h2{font-size:clamp(48px,7.5vw,104px);margin-bottom:28px}
+
+/* fire story */
+.story{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:start}
+.stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 40px);aspect-ratio:4/5;max-width:100%;border-radius:20px;overflow:hidden;background:var(--surface)}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s,transform 1.4s;transform:scale(1.06)}
+.stage img.on{opacity:1;transform:none}
+.stage .tag{position:absolute;left:16px;bottom:16px;background:rgba(18,13,10,.75);backdrop-filter:blur(6px);padding:8px 14px;border-radius:999px;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.steps{display:grid;gap:0}
+.step{min-height:62vh;display:flex;flex-direction:column;justify-content:center;border-top:1px solid var(--line);padding-block:40px;opacity:.45;transition:opacity .5s}
+.step.on,.no-js .step{opacity:1}
+.step .num{font-family:var(--display);font-weight:800;font-size:15px;color:var(--ember);letter-spacing:.14em;text-transform:uppercase}
+.step h3{font-size:clamp(40px,5vw,64px);margin:10px 0 16px}
+.step p{color:var(--muted);font-size:18px;max-width:40ch;margin:0}
+.step .stat{margin-top:22px;font-family:var(--display);font-size:56px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.step .stat small{font-family:var(--body);font-size:14px;color:var(--muted);font-weight:500;margin-left:8px;letter-spacing:.04em}
+
+/* doneness */
+.punto{background:var(--surface);border-block:1px solid var(--line)}
+.punto-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,6vw,80px);align-items:center}
+.steak{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:46% 54% 50% 50%/56% 50% 50% 44%;
+  background:radial-gradient(ellipse 64% 58% at 50% 52%,var(--core) 0 calc(var(--core-size)*1%),var(--mid) calc(var(--core-size)*1% + 10%),#7a4a32 82%,#3b2216 92%,#1f120b 100%);
+  box-shadow:inset 0 0 0 10px #241309,inset 0 0 40px 18px rgba(0,0,0,.55),0 40px 80px -30px rgba(0,0,0,.8);transition:background .5s}
+.steak::after{content:"";position:absolute;inset:0;border-radius:inherit;background:repeating-linear-gradient(115deg,rgba(0,0,0,0) 0 22px,rgba(0,0,0,.08) 22px 24px);mix-blend-mode:multiply}
+.fat{position:absolute;right:9%;top:16%;width:22%;height:12%;border-radius:50%;background:radial-gradient(ellipse,#f1dcc4,#d9b994 70%,transparent 72%);opacity:.75}
+.temp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--display);font-weight:900;font-size:clamp(44px,7vw,84px);color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.5);font-variant-numeric:tabular-nums;z-index:1}
+.punto-ctrl h3{font-size:clamp(40px,5vw,60px);margin-bottom:8px}
+.punto-ctrl p.desc{color:var(--muted);min-height:3.2em;margin:0 0 26px;font-size:17px}
+input[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:8px;border-radius:999px;background:linear-gradient(90deg,#b0213a,#d4515a,#d98b78,#b9876a,#7a5642);outline-offset:6px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:var(--ink);border:6px solid var(--ember);cursor:grab}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--ink);border:6px solid var(--ember);cursor:grab}
+.ticks{display:flex;justify-content:space-between;margin-top:12px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);gap:4px}
+.ticks button{background:none;border:0;color:inherit;font:inherit;cursor:pointer;padding:4px 0;text-align:center;flex:1}
+.ticks button.on{color:var(--ink);font-weight:700}
+.pair{margin-top:26px;display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--raise)}
+.pair b{font-family:var(--display);font-size:22px;text-transform:uppercase}
+.pair span{color:var(--muted);font-size:14px}
+
+/* menu */
+.carta-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.carta-head p{color:var(--muted);max-width:40ch;margin:0}
+.cat{font-family:var(--serif);font-style:italic;font-size:30px;color:var(--ember);margin:36px 0 4px}
+.dish{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 24px;align-items:baseline;padding-block:20px;border-bottom:1px solid var(--line);position:relative;cursor:default}
+.dish .thumb{display:none}
+.dish h3{font-size:clamp(30px,4vw,48px);font-weight:800;transition:color .25s,transform .35s}
+.dish:hover h3{color:var(--ember);transform:translateX(8px)}
+.dish .w{font-size:13px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;min-width:64px}
+.dish .pr{font-family:var(--display);font-size:clamp(24px,3vw,34px);font-weight:800;font-variant-numeric:tabular-nums}
+.dish p{grid-column:2/-1;margin:0;color:var(--muted)}
+.peek{position:fixed;z-index:30;width:300px;aspect-ratio:4/3;border-radius:14px;overflow:hidden;pointer-events:none;opacity:0;transform:translate(-50%,-60%) scale(.85) rotate(-3deg);transition:opacity .25s,transform .35s;box-shadow:0 30px 60px -20px rgba(0,0,0,.8);left:0;top:0}
+.peek.on{opacity:1;transform:translate(-50%,-60%) scale(1) rotate(-3deg)}
+.peek img{width:100%;height:100%;object-fit:cover}
+
+/* gallery */
+.strip{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:16px;scrollbar-color:var(--ember) var(--surface)}
+.strip figure{flex:0 0 min(78vw,520px);margin:0;scroll-snap-align:start}
+.strip img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;filter:saturate(.95) contrast(1.05);transition:filter .4s}
+.strip figure:hover img{filter:saturate(1.15) contrast(1.1)}
+.strip figcaption{margin-top:10px;font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+/* reservation */
+.res-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,5vw,64px);align-items:start}
+.field{margin-bottom:26px}
+.field>label,.field>.lbl{display:block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:700}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 14px;cursor:pointer;transition:background .2s,border-color .2s;text-align:center;line-height:1.2}
+.chip small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.chip[aria-pressed=true]{background:var(--ember);border-color:var(--ember);color:var(--on-ember)}
+.chip[aria-pressed=true] small{color:var(--on-ember)}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.stepper button{font:inherit;font-size:22px;width:52px;height:48px;background:none;border:0;color:var(--ink);cursor:pointer}
+.stepper output{min-width:56px;text-align:center;font-family:var(--display);font-size:28px;font-weight:800}
+.txt{font:inherit;width:100%;max-width:420px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.ticket{position:sticky;top:calc(env(safe-area-inset-top,0px) + 32px);background:var(--ink);color:#1b120c;border-radius:18px;padding:30px 28px;overflow:hidden}
+.ticket::before,.ticket::after{content:"";position:absolute;width:28px;height:28px;border-radius:50%;background:var(--bg);top:58%}
+.ticket::before{left:-14px}.ticket::after{right:-14px}
+.ticket .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#7a6656;font-weight:700}
+.ticket .v{font-family:var(--display);font-size:34px;font-weight:900;text-transform:uppercase;line-height:1;margin:4px 0 18px}
+.ticket .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ticket hr{border:0;border-top:2px dashed #cbb8a6;margin:8px 0 20px}
+.ticket .btn{width:100%;justify-content:center}
+.stamp{position:absolute;right:18px;top:22px;transform:rotate(12deg) scale(1.6);opacity:0;border:3px solid var(--ember-deep);color:var(--ember-deep);font-family:var(--display);font-weight:900;font-size:18px;padding:4px 10px;border-radius:6px;text-transform:uppercase;transition:all .35s cubic-bezier(.2,1.6,.4,1)}
+.stamp.on{opacity:1;transform:rotate(12deg) scale(1)}
+.note{font-size:13px;color:#6b5848;margin:14px 0 0}
+
+footer{border-top:1px solid var(--line);padding-block:40px;color:var(--muted);font-size:13px}
+footer .big{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(60px,14vw,180px);line-height:.85;color:var(--surface);-webkit-text-stroke:1px var(--line);margin-bottom:24px}
+footer ul{padding-left:18px;margin:8px 0 0}
+footer a{color:var(--muted)}
+
+@media (max-width:860px){
+  .story,.punto-grid,.res-grid{grid-template-columns:1fr}
+  .stage{position:relative;top:auto;aspect-ratio:4/3}
+  .step{min-height:0}
+  .step,.no-js .step{opacity:1}
+  .ticket{position:relative;top:auto}
+  .dish{grid-template-columns:72px minmax(0,1fr) auto}
+  .dish .thumb{display:block;grid-row:1/3;width:72px;height:72px;border-radius:12px;object-fit:cover;align-self:center}
+  .dish .w{display:none}
+  .nav nav{gap:16px}
+  .hero h1{line-height:.95}
+  .hero h1 .serif{display:block;line-height:1.05}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-img img,.track,.hero h1 .ln span{animation:none}
+  #sparks,.glow{display:none}
+  .stage img{transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+
+<div class="demo">Ejemplo de portfolio · restaurante ficticio · precios ilustrativos</div>
+
+<div class="nav"><div class="wrap">
+  <div class="logo">Brasa <span>del Sur</span></div>
+  <nav><a href="#fuego">El fuego</a><a href="#punto">Tu punto</a><a href="#carta">Carta</a><a href="#reservas">Reservas</a></nav>
+</div></div>
+
+<header class="hero" id="hero">
+  <div class="hero-img"><img src="img/brasas.webp" alt="Brasas de quebracho encendidas" fetchpriority="high"></div>
+  <canvas id="sparks" aria-hidden="true"></canvas>
+  <div class="glow" id="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow">Parrilla a leña · Abrimos a las 20 h</p>
+    <h1><span class="ln"><span>Fuego lento,</span></span><span class="ln"><span><em class="serif">carne</em> al punto.</span></span></h1>
+    <div class="hero-row">
+      <p>Cortes madurados 21 días, leña de quebracho y un parrillero que te pregunta cómo la querés. Esto se come mirando el fuego.</p>
+      <div class="hero-ctas"><a class="btn" href="#reservas">Reservar mesa →</a><a class="btn ghost" href="#carta">Ver la carta</a></div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="track">
+  <span>Leña de <b>quebracho</b></span><span>·</span><span><b>21</b> días de maduración</span><span>·</span><span>Sal <b>parrillera</b></span><span>·</span><span>Chimichurri de la <b>casa</b></span><span>·</span>
+  <span>Leña de <b>quebracho</b></span><span>·</span><span><b>21</b> días de maduración</span><span>·</span><span>Sal <b>parrillera</b></span><span>·</span><span>Chimichurri de la <b>casa</b></span><span>·</span>
+</div></div>
+
+<section id="fuego"><div class="wrap">
+  <p class="eyebrow">Cómo cocinamos</p>
+  <h2 class="h2">Tres pasos.<br><span class="serif">Ningún atajo.</span></h2>
+  <div class="story">
+    <div class="stage" id="stage">
+      <img class="on" src="img/estaca.webp" alt="Costillar asándose a la estaca junto a las brasas" data-step="0">
+      <img src="img/disco.webp" alt="Cortes de carne cocinándose con humo" data-step="1" loading="lazy">
+      <img src="img/corte.webp" alt="Bife cortado en fetas, rosado por dentro" data-step="2" loading="lazy">
+      <span class="tag" id="stageTag">Paso 1 · La leña</span>
+    </div>
+    <div class="steps">
+      <article class="step on" data-step="0"><span class="num">Paso 1</span><h3>La leña</h3><p>Prendemos quebracho a las 17 h. Tres horas después no queda llama: solo brasa pareja que no ahúma de más.</p><div class="stat" data-count="3">3<small>horas de fuego antes del primer corte</small></div></article>
+      <article class="step" data-step="1"><span class="num">Paso 2</span><h3>La brasa</h3><p>El parrillero arrastra brasa debajo de cada corte según su grosor. Nada de gas, nada de plancha.</p><div class="stat" data-count="21">21<small>días de maduración en cámara</small></div></article>
+      <article class="step" data-step="2"><span class="num">Paso 3</span><h3>El punto</h3><p>Sale cuando vos lo pediste, descansa dos minutos y llega a la mesa sobre tabla caliente.</p><div class="stat" data-count="2">2<small>minutos de reposo, siempre</small></div></article>
+    </div>
+  </div>
+</div></section>
+
+<section class="punto" id="punto"><div class="wrap punto-grid">
+  <div class="steak" id="steak" style="--core:#d4515a;--mid:#c96c62;--core-size:28">
+    <div class="fat"></div><div class="temp" id="temp">55 °C</div>
+  </div>
+  <div class="punto-ctrl">
+    <p class="eyebrow">Elegí tu punto</p>
+    <h3 id="pname">Jugoso</h3>
+    <p class="desc" id="pdesc">Centro rojo brillante y tibio. El punto que recomienda el parrillero para el ojo de bife.</p>
+    <label class="eyebrow" for="pr" style="display:block;color:var(--muted)">Temperatura en el centro del corte</label>
+    <input type="range" id="pr" min="0" max="4" step="1" value="1">
+    <div class="ticks" id="ticks"><button type="button">Vuelta y vuelta</button><button type="button" class="on">Jugoso</button><button type="button">A punto</button><button type="button">Cocido</button><button type="button">Bien cocido</button></div>
+    <div class="pair"><div><span>Corte ideal para este punto</span><br><b id="pcut">Ojo de bife</b></div></div>
+  </div>
+</div></section>
+
+<section id="carta"><div class="wrap">
+  <div class="carta-head"><div><p class="eyebrow">Nuestra carta</p><h2 class="h2" style="margin:0">De la parrilla</h2></div><p>Porciones individuales. Todas las carnes salen con sal parrillera y chimichurri aparte.</p></div>
+  <div class="cat">Cortes</div>
+  <div class="dish" data-img="img/corte.webp"><img class="thumb" src="img/corte.webp" alt="" loading="lazy"><span class="w">400 g</span><h3>Ojo de bife</h3><span class="pr">$ 24.900</span><p>Madurado 21 días. El más pedido de la casa.</p></div>
+  <div class="dish" data-img="img/disco.webp"><img class="thumb" src="img/disco.webp" alt="" loading="lazy"><span class="w">350 g</span><h3>Entraña</h3><span class="pr">$ 21.500</span><p>Fina, con su piel crocante. Va mejor jugosa.</p></div>
+  <div class="dish" data-img="img/estaca.webp"><img class="thumb" src="img/estaca.webp" alt="" loading="lazy"><span class="w">450 g</span><h3>Vacío</h3><span class="pr">$ 19.800</span><p>Tres horas a fuego bajo hasta que se corta con cuchara.</p></div>
+  <div class="cat">Para compartir</div>
+  <div class="dish" data-img="img/campo.webp"><img class="thumb" src="img/campo.webp" alt="" loading="lazy"><span class="w">2 pers.</span><h3>Parrillada</h3><span class="pr">$ 46.000</span><p>Vacío, chorizo, morcilla, molleja y provoleta.</p></div>
+  <div class="dish" data-img="img/provoleta.webp"><img class="thumb" src="img/provoleta.webp" alt="" loading="lazy"><span class="w">1 u.</span><h3>Provoleta</h3><span class="pr">$ 9.200</span><p>Con orégano y ají, dorada en hierro.</p></div>
+</div></section>
+<div class="peek" id="peek" aria-hidden="true"><img alt="" id="peekImg" src="img/corte.webp"></div>
+
+<section style="padding-top:0"><div class="wrap">
+  <p class="eyebrow">Una noche en Brasa</p>
+  <div class="strip" tabindex="0" aria-label="Galería de fotos">
+    <figure><img src="img/estaca.webp" alt="Asado a la estaca" loading="lazy"><figcaption>Costillar a la estaca</figcaption></figure>
+    <figure><img src="img/brasas.webp" alt="Brasas encendidas" loading="lazy"><figcaption>La brasa, a las 20 h</figcaption></figure>
+    <figure><img src="img/provoleta.webp" alt="Provoleta" loading="lazy"><figcaption>Provoleta en hierro</figcaption></figure>
+    <figure><img src="img/campo.webp" alt="Asado al aire libre" loading="lazy"><figcaption>Asado de domingo</figcaption></figure>
+    <figure><img src="img/corte.webp" alt="Bife en fetas" loading="lazy"><figcaption>Ojo de bife, jugoso</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="reservas" style="background:var(--surface);border-top:1px solid var(--line)"><div class="wrap">
+  <p class="eyebrow">Reservas</p>
+  <h2 class="h2">Tu mesa,<br><span class="serif">lista al llegar.</span></h2>
+  <div class="res-grid">
+    <form id="resForm">
+      <div class="field"><span class="lbl">Día</span><div class="chips" id="days"></div></div>
+      <div class="field"><span class="lbl">Hora</span><div class="chips" id="times"></div></div>
+      <div class="field"><span class="lbl">Personas</span>
+        <div class="stepper"><button type="button" id="minus" aria-label="Una persona menos">−</button><output id="ppl">4</output><button type="button" id="plus" aria-label="Una persona más">+</button></div></div>
+      <div class="field"><label for="rname">A nombre de</label><input class="txt" id="rname" value="Martín Gómez" autocomplete="name"></div>
+    </form>
+    <aside class="ticket" aria-live="polite">
+      <div class="stamp" id="stamp">Demo</div>
+      <div class="k">Brasa del Sur · Reserva</div>
+      <div class="v" id="tName">Martín Gómez</div>
+      <div class="row"><div><div class="k">Día</div><div class="v" id="tDay">—</div></div><div><div class="k">Hora</div><div class="v" id="tTime">21:00</div></div></div>
+      <hr>
+      <div class="row"><div><div class="k">Mesa para</div><div class="v" id="tPpl">4</div></div><div><div class="k">Sector</div><div class="v" id="tZone">Parrilla</div></div></div>
+      <button class="btn" type="submit" form="resForm" id="confirm">Confirmar reserva</button>
+      <p class="note" id="note">Te confirmamos por WhatsApp en minutos.</p>
+    </aside>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="big" aria-hidden="true">Brasa del Sur</div>
+  <p>Diseño de muestra para portfolio. Brasa del Sur es un restaurante ficticio; precios y textos son ilustrativos.</p>
+  <p>Fotos de Wikimedia Commons:</p>
+  <ul>
+    <li>Brasas: Jens Buurgaard Nielsen, dominio público</li>
+    <li>Asado a la estaca: Valenroselli, CC BY-SA 3.0</li>
+    <li>Asado a la estaca (campo) y provoleta: Horacio Cambeiro, CC BY-SA 4.0</li>
+    <li>Bife en fetas: Ceeseven, CC BY-SA 4.0</li>
+    <li>Cortes con humo: total13 (Flickr), CC BY 2.0</li>
+  </ul>
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = matchMedia('(pointer: fine)').matches;
+
+  /* sparks */
+  var c=document.getElementById('sparks'), x=c.getContext&&c.getContext('2d'), ps=[], W=0, H=0;
+  function size(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  if(x){
+    size(); addEventListener('resize',size);
+    for(var i=0;i<90;i++) ps.push({x:Math.random(),y:Math.random(),r:Math.random()*1.8+.4,v:Math.random()*.0022+.0008,a:Math.random()});
+    var draw=function(move){
+      x.clearRect(0,0,W,H);
+      for(var i=0;i<ps.length;i++){var p=ps[i];
+        if(move){p.y-=p.v;p.x+=Math.sin(p.y*18+p.a*6)*.0008;if(p.y<-.02){p.y=1.02;p.x=Math.random();}}
+        var al=Math.min(1,p.y*1.4)*(.45+p.a*.55);
+        x.fillStyle='rgba(255,'+(140+Math.round(p.a*80))+',70,'+al+')';
+        x.beginPath();x.arc(p.x*W,p.y*H,p.r,0,7);x.fill();
+      }
+    };
+    draw(false);
+    if(!reduce){(function loop(){draw(true);requestAnimationFrame(loop);})();}
+  }
+
+  /* cursor glow in hero */
+  var hero=document.getElementById('hero'), glow=document.getElementById('glow');
+  if(fine && !reduce){hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();glow.style.left=(e.clientX-r.left)+'px';glow.style.top=(e.clientY-r.top)+'px';});}
+
+  /* scroll effects */
+  var steps=[].slice.call(document.querySelectorAll('.step')), imgs=[].slice.call(document.querySelectorAll('#stage img')), tag=document.getElementById('stageTag');
+  var labels=['Paso 1 · La leña','Paso 2 · La brasa','Paso 3 · El punto'];
+  function setStep(n){steps.forEach(function(s,i){s.classList.toggle('on',i===n);});imgs.forEach(function(m,i){m.classList.toggle('on',i===n);});tag.textContent=labels[n];}
+  function countUp(el){var to=+el.dataset.count,small=el.querySelector('small').outerHTML,t0=null;
+    if(reduce)return; (function f(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/900);el.innerHTML=Math.round(to*k)+small;if(k<1)requestAnimationFrame(f);})(performance.now());}
+  if(window.gsap && window.ScrollTrigger){
+    gsap.registerPlugin(ScrollTrigger);
+    if(!reduce){
+      gsap.to('.hero-img',{yPercent:14,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+      gsap.to('.hero .wrap',{yPercent:-18,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+      gsap.utils.toArray('.strip figure').forEach(function(f,i){gsap.fromTo(f,{y:40+i*12},{y:0,ease:'none',scrollTrigger:{trigger:'.strip',start:'top bottom',end:'center center',scrub:true}});});
+    }
+    steps.forEach(function(s,i){
+      ScrollTrigger.create({trigger:s,start:'top 60%',end:'bottom 40%',onToggle:function(st){if(st.isActive)setStep(i);}});
+      var stat=s.querySelector('.stat');ScrollTrigger.create({trigger:stat,start:'top 85%',once:true,onEnter:function(){countUp(stat);}});
+    });
+  } else { document.documentElement.classList.add('no-js'); }
+
+  /* doneness */
+  var P=[
+    {n:'Vuelta y vuelta',t:48,core:'#b0213a',mid:'#c23a4a',s:40,d:'Sellado por fuera, crudo y frío en el centro. Para los que saben lo que piden.',cut:'Lomo'},
+    {n:'Jugoso',t:55,core:'#d4515a',mid:'#c96c62',s:28,d:'Centro rojo brillante y tibio. El punto que recomienda el parrillero para el ojo de bife.',cut:'Ojo de bife'},
+    {n:'A punto',t:60,core:'#d98b78',mid:'#c08368',s:18,d:'Centro rosado, jugos claros. El equilibrio clásico de la parrilla argentina.',cut:'Entraña'},
+    {n:'Cocido',t:65,core:'#c49a80',mid:'#a8785e',s:10,d:'Apenas un hilo rosado en el centro. Más firme, sigue siendo jugoso.',cut:'Vacío'},
+    {n:'Bien cocido',t:71,core:'#9c7a62',mid:'#8a6550',s:2,d:'Cocido parejo de borde a borde. Le damos más tiempo y menos fuego para que no se seque.',cut:'Bondiola'}
+  ];
+  var rng=document.getElementById('pr'),steak=document.getElementById('steak'),tb=[].slice.call(document.querySelectorAll('#ticks button'));
+  function setP(i){var p=P[i];rng.value=i;steak.style.setProperty('--core',p.core);steak.style.setProperty('--mid',p.mid);steak.style.setProperty('--core-size',p.s);
+    document.getElementById('temp').textContent=p.t+' °C';document.getElementById('pname').textContent=p.n;document.getElementById('pdesc').textContent=p.d;document.getElementById('pcut').textContent=p.cut;
+    tb.forEach(function(b,k){b.classList.toggle('on',k===i);});}
+  rng.addEventListener('input',function(){setP(+rng.value);});
+  tb.forEach(function(b,k){b.addEventListener('click',function(){setP(k);});});
+
+  /* menu peek */
+  var peek=document.getElementById('peek'),peekImg=document.getElementById('peekImg');
+  if(fine){
+    document.querySelectorAll('.dish').forEach(function(d){
+      d.addEventListener('pointerenter',function(){peekImg.src=d.dataset.img;peek.classList.add('on');});
+      d.addEventListener('pointerleave',function(){peek.classList.remove('on');});
+      d.addEventListener('pointermove',function(e){peek.style.left=e.clientX+'px';peek.style.top=e.clientY+'px';});
+    });
+  }
+
+  /* reservation */
+  var dn=['dom','lun','mar','mié','jue','vie','sáb'],mn=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  var days=document.getElementById('days'),times=document.getElementById('times'),state={day:null,time:'21:00',ppl:4};
+  function pick(group,btn){[].forEach.call(group.children,function(b){b.setAttribute('aria-pressed',b===btn);});}
+  var d=new Date(),added=0,first=null;
+  for(var k=0;added<7;k++){var dd=new Date(d.getFullYear(),d.getMonth(),d.getDate()+k);if(dd.getDay()===1)continue;
+    var b=document.createElement('button');b.type='button';b.className='chip';b.setAttribute('aria-pressed','false');
+    b.innerHTML='<small>'+(k===0?'hoy':dn[dd.getDay()])+'</small>'+dd.getDate()+' '+mn[dd.getMonth()];
+    b.dataset.label=(k===0?'Hoy':dn[dd.getDay()])+' '+dd.getDate()+' '+mn[dd.getMonth()];
+    b.addEventListener('click',function(){pick(days,this);state.day=this.dataset.label;render();});
+    days.appendChild(b);if(!first)first=b;added++;}
+  ['20:00','20:30','21:00','21:30','22:00','22:30'].forEach(function(t){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=t;b.setAttribute('aria-pressed',t===state.time);
+    b.addEventListener('click',function(){pick(times,b);state.time=t;render();});times.appendChild(b);});
+  if(first){var second=days.children[1]||first;pick(days,second);state.day=second.dataset.label;}
+  var ppl=document.getElementById('ppl');
+  document.getElementById('minus').onclick=function(){state.ppl=Math.max(1,state.ppl-1);render();};
+  document.getElementById('plus').onclick=function(){state.ppl=Math.min(12,state.ppl+1);render();};
+  var rname=document.getElementById('rname');rname.addEventListener('input',render);
+  function render(){ppl.textContent=state.ppl;document.getElementById('tPpl').textContent=state.ppl;document.getElementById('tDay').textContent=state.day||'—';
+    document.getElementById('tTime').textContent=state.time;document.getElementById('tName').textContent=rname.value.trim()||'Tu nombre';
+    document.getElementById('tZone').textContent=state.ppl>6?'Salón':'Parrilla';
+    document.getElementById('stamp').classList.remove('on');document.getElementById('note').textContent='Te confirmamos por WhatsApp en minutos.';}
+  document.getElementById('resForm').addEventListener('submit',function(e){e.preventDefault();document.getElementById('stamp').classList.add('on');
+    document.getElementById('note').textContent='Esto es una demo: la reserva no se envió. En la versión real llega al WhatsApp del restaurante.';});
+  render();
+})();
+</script>
+
+</body>
+</html>
