@@ -3,375 +3,507 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Rumbo Taxis: proyecto conceptual de web para empresa de taxis.">
+<meta name="description" content="Rumbo Taxis: proyecto conceptual de web para empresa de taxis, con taxímetro online.">
+<meta property="og:title" content="Rumbo Taxis · Proyecto conceptual">
+<meta property="og:image" content="img/hero-sm.webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f3cff'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%23ff6a3d'/%3E%3C/svg%3E">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Rumbo Taxis</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&family=Share+Tech+Mono&display=swap">
 <style>
-/* Layout: taxi checker identity. Hero pairs a big promise with the live fare calculator on a zone map; then services, fleet,
-   editable fare table (shows the CMS idea), coverage with arrival times, booking form, FAQ. */
+/* Direction "Turno noche": a night-shift taxi company. Asphalt dark, sodium-amber light, road-sign condensed type, taximeter digits.
+   Signature: a working taximeter that rolls while the route draws on a city map. Deliberately single dark theme. */
 :root{
-  --bg:#f6f5f0;--surface:#ffffff;--ink:#16161a;--muted:#5f5f6b;--yellow:#ffc21a;--yellow-ink:#1b1400;--line:#e4e2da;--road:#2a2a31;--zone:#ecebe3;--zone-hi:#ffe7a3;--good:#16a34a;
-  --display:"Archivo",ui-sans-serif,system-ui,sans-serif;
-  --mono:"DM Mono",ui-monospace,Menlo,monospace;
-  --shadow:0 30px 60px -34px rgba(22,22,26,.4);
+  --asphalt:#0d0e11;--asphalt-2:#15171c;--asphalt-3:#1d2027;--line:#2a2e37;--ink:#f2efe8;--muted:#a4a7ae;--amber:#ffb000;--amber-2:#ffcc4d;--amber-ink:#1d1300;--free:#38d27a;
+  --map-bg:#111318;--map-street:#262a33;--map-avenue:#363b46;--map-water:#0c2633;--map-park:#11261b;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --body:"Barlow",ui-sans-serif,system-ui,sans-serif;
+  --meter:"Share Tech Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111114;--surface:#1b1b20;--ink:#f2f1ec;--muted:#a3a3ad;--line:#2c2c33;--road:#0b0b0d;--zone:#26262d;--zone-hi:#5a4710;--shadow:0 30px 60px -30px rgba(0,0,0,.8);color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#111114;--surface:#1b1b20;--ink:#f2f1ec;--muted:#a3a3ad;--line:#2c2c33;--road:#0b0b0d;--zone:#26262d;--zone-hi:#5a4710;--shadow:0 30px 60px -30px rgba(0,0,0,.8);color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--display);font-size:16px;line-height:1.55;overflow-x:hidden}
+body{background:var(--asphalt);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--asphalt)}
 img{display:block;max-width:100%}
-.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
-h1,h2,h3{margin:0;line-height:1;letter-spacing:-.03em;text-wrap:balance}
-.checker{height:14px;background:conic-gradient(var(--ink) 25%,var(--yellow) 0 50%,var(--ink) 0 75%,var(--yellow) 0) 0 0/14px 14px}
-.demo{background:var(--ink);color:var(--bg);font-size:12px;text-align:center;padding-block:7px;font-family:var(--mono)}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;display:flex;align-items:center;gap:8px}
-.eyebrow::before{content:"";width:10px;height:10px;background:var(--yellow);border-radius:2px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:700;background:var(--yellow);color:var(--yellow-ink);border:0;border-radius:14px;padding:15px 22px;text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s}
-.btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px -12px rgba(255,194,26,.9)}
-.btn.dark{background:var(--ink);color:var(--bg)}
-.btn.dark:hover{box-shadow:0 12px 24px -12px rgba(0,0,0,.6)}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,polygon:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);text-transform:uppercase;margin:0;line-height:.92;letter-spacing:.005em;text-wrap:balance}
+.kicker{font-family:var(--meter);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin:0 0 16px;display:flex;gap:10px;align-items:center}
+.kicker::before{content:"";width:22px;height:2px;background:var(--amber)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:inherit;font-weight:600;font-size:16px;background:var(--amber);color:var(--amber-ink);border:0;border-radius:6px;padding:16px 24px;text-decoration:none;cursor:pointer;transition:background .2s,transform .2s}
+.btn:hover{background:var(--amber-2);transform:translateY(-2px)}
+.btn.line{background:transparent;color:var(--ink);border:1px solid rgba(242,239,232,.35)}
+.btn.line:hover{border-color:var(--ink);background:rgba(255,255,255,.04)}
 
-header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:16px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:22px;letter-spacing:-.03em}
-.logo .badge{width:38px;height:38px;border-radius:10px;background:var(--yellow);display:grid;place-items:center;color:var(--yellow-ink)}
-nav{display:flex;gap:22px;font-weight:600;font-size:15px;flex-wrap:wrap}
-nav a{color:var(--muted);text-decoration:none}
-nav a:hover{color:var(--ink)}
-.phone{font-family:var(--mono);font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 14px;display:flex;align-items:center;gap:8px}
-.phone i{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 4px color-mix(in srgb,var(--good) 25%,transparent)}
+/* top */
+.demo{background:var(--amber);color:var(--amber-ink);font-family:var(--meter);font-size:12px;text-align:center;padding-block:6px;letter-spacing:.06em}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(13,14,17,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:14px}
+.logo{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.02em}
+.logo .sign{background:var(--amber);color:var(--amber-ink);font-size:13px;letter-spacing:.14em;padding:4px 8px;border-radius:3px;box-shadow:0 0 18px rgba(255,176,0,.45)}
+.nav nav{display:flex;gap:26px;font-weight:500;font-size:15px}
+.nav nav a{color:var(--muted);text-decoration:none}
+.nav nav a:hover{color:var(--ink)}
+.callbox{font-family:var(--meter);font-size:14px;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.callbox i{width:8px;height:8px;border-radius:50%;background:var(--free);box-shadow:0 0 0 4px rgba(56,210,122,.18)}
 
 /* hero */
-.hero .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center;padding-block:40px 72px}
-.hero h1{font-size:clamp(46px,6.6vw,92px);font-weight:900}
-.hero h1 mark{background:var(--yellow);color:var(--yellow-ink);padding:0 .12em;border-radius:.12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.hero p.lead{font-size:19px;color:var(--muted);max-width:44ch;margin:22px 0 28px}
-.live{display:flex;gap:28px;flex-wrap:wrap;margin-top:30px}
-.live div{font-size:14px;color:var(--muted)}
-.live b{display:block;font-size:32px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-.road{position:relative;height:56px;margin-top:34px;background:var(--road);border-radius:14px;overflow:hidden}
-.road::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:repeating-linear-gradient(90deg,#f6f5f0 0 30px,transparent 30px 60px);animation:lane 1s linear infinite;opacity:.8}
-@keyframes lane{to{background-position:-60px 0}}
-.road svg{position:absolute;top:9px;left:12%;height:38px;width:auto;animation:drive 9s ease-in-out infinite alternate}
-@keyframes drive{to{left:72%}}
+.hero{position:relative;min-height:640px;height:88svh;max-height:920px;display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+.hero-photo{position:absolute;inset:-8% 0 0;z-index:-2}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:35% 50%}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(13,14,17,.92) 0%,rgba(13,14,17,.55) 48%,rgba(13,14,17,.1) 100%),linear-gradient(0deg,var(--asphalt) 0%,rgba(13,14,17,0) 38%)}
+.hero .wrap{width:100%;padding-block:0 64px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:32px;align-items:end}
+.hero h1{font-size:clamp(64px,10.5vw,168px);font-weight:800}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln span{display:inline-block}
+.hero h1 em{font-style:normal;color:var(--amber);text-shadow:0 0 40px rgba(255,176,0,.35)}
+.hero p{max-width:44ch;color:#d7d4cd;font-size:19px;margin:24px 0 30px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.livecard{justify-self:end;background:rgba(21,23,28,.86);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:10px;padding:18px 20px;min-width:0;width:100%;max-width:300px}
+.livecard .k{font-family:var(--meter);font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.livecard .k i{width:8px;height:8px;border-radius:50%;background:var(--free)}
+.livecard b{display:block;font-family:var(--display);font-size:54px;line-height:1;margin-top:6px;font-variant-numeric:tabular-nums}
+.livecard small{color:var(--muted)}
+.livecard .eta{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:14px;padding-top:12px;font-family:var(--meter);font-size:14px}
 
-/* calculator */
-.calc{background:var(--surface);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}
-.calc-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap}
-.calc-head b{font-size:18px}
-.calc-head small{font-family:var(--mono);color:var(--muted)}
-.map{position:relative;background:var(--bg)}
-.map svg{display:block;width:100%;height:auto}
-.zone{fill:var(--zone);stroke:var(--bg);stroke-width:4;cursor:pointer;transition:fill .25s}
-.zone:hover{fill:var(--zone-hi)}
-.zone.o{fill:var(--yellow)}
-.zone.d{fill:var(--ink)}
-.zlabel{font-family:var(--mono);font-size:12px;fill:var(--muted);pointer-events:none;text-anchor:middle}
-.zlabel.on{fill:var(--yellow-ink);font-weight:500}
-.zlabel.dk{fill:var(--bg)}
-.streets path{stroke:var(--line);stroke-width:2;fill:none}
-#route{fill:none;stroke:var(--yellow);stroke-width:5;stroke-linecap:round;filter:drop-shadow(0 2px 0 rgba(0,0,0,.35))}
-#car{transition:opacity .3s}
-.pin{font-family:var(--mono);font-size:11px}
-.maphint{position:absolute;left:12px;top:12px;font-family:var(--mono);font-size:11px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--muted)}
-.controls{padding:18px 20px;display:grid;gap:14px}
-.r2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-label.f{display:grid;gap:6px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-select,input.txt{font:inherit;font-size:15px;font-weight:600;text-transform:none;letter-spacing:0;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
-.seg{display:flex;gap:6px;flex-wrap:wrap}
-.seg button{font:inherit;font-size:14px;font-weight:700;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:9px 12px;cursor:pointer;flex:1;min-width:0}
-.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.toggle{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;cursor:pointer}
-.toggle input{width:20px;height:20px;accent-color:var(--ink)}
-.result{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;background:var(--ink);color:var(--bg);padding:18px 20px}
-.result .k{font-family:var(--mono);font-size:11px;opacity:.7;text-transform:uppercase}
-.result .price{font-size:44px;font-weight:900;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
-.result .meta{font-family:var(--mono);font-size:13px;opacity:.8;margin-top:6px}
-.msg{margin:0;padding:14px 20px;font-size:14px;background:color-mix(in srgb,var(--yellow) 22%,var(--surface));border-top:1px solid var(--line)}
+section{padding-block:clamp(80px,10vw,136px)}
+.h2{font-size:clamp(52px,7vw,104px);font-weight:800;margin-bottom:22px}
+.h2 em{font-style:normal;color:var(--amber)}
+.lead{color:var(--muted);font-size:19px;max-width:54ch;margin:0}
 
-section{padding-block:clamp(72px,9vw,112px)}
-.h2{font-size:clamp(36px,5vw,64px);font-weight:900;margin-bottom:16px}
-.sub{color:var(--muted);font-size:18px;max-width:56ch;margin:0 0 40px}
+/* taximeter calculator */
+.calc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:44px}
+.calc{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:22px;align-items:stretch}
+.map{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--map-bg);min-width:0}
+.map svg{display:block;width:100%;height:100%}
+.map{display:flex;flex-direction:column}
+.map svg{flex:1;min-height:0}
+.map .hint{font-family:var(--meter);font-size:13px;background:var(--asphalt-2);border-top:1px solid var(--line);padding:10px 14px;color:var(--muted);pointer-events:none}
+.zone{fill:rgba(255,176,0,0);stroke:rgba(255,176,0,.0);stroke-width:2;cursor:pointer;transition:fill .25s,stroke .25s}
+.zone:hover{fill:rgba(255,176,0,.08);stroke:rgba(255,176,0,.4)}
+.zone.o{fill:rgba(255,176,0,.16);stroke:var(--amber)}
+.zone.d{fill:rgba(56,210,122,.12);stroke:var(--free)}
+.zl{font-family:var(--meter);font-size:13px;fill:#8d919a;pointer-events:none;text-anchor:middle;letter-spacing:.06em;text-transform:uppercase}
+.zl.o{fill:var(--amber)}.zl.d{fill:var(--free)}
+.st-label{font-family:var(--body);font-size:11px;fill:#5d626c;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
+#route{fill:none;stroke:var(--amber);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(255,176,0,.7))}
+#routeGhost{fill:none;stroke:rgba(255,176,0,.18);stroke-width:12;stroke-linecap:round}
+.meter{background:linear-gradient(180deg,#191b20,#0f1013);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:16px;align-content:start;min-width:0}
+.meter .brand{display:flex;justify-content:space-between;align-items:center;font-family:var(--meter);font-size:12px;color:var(--muted);letter-spacing:.1em}
+.meter .brand .led{display:flex;gap:8px;align-items:center}
+.meter .brand .led i{width:9px;height:9px;border-radius:50%;background:#3a3d44}
+.meter .brand .led i.on{background:var(--amber);box-shadow:0 0 10px var(--amber)}
+.screen{background:#070806;border-radius:8px;padding:16px 16px 12px;border:1px solid #23251f;box-shadow:inset 0 0 30px rgba(0,0,0,.8)}
+.screen .lbl{font-family:var(--meter);font-size:11px;color:#6f5a26;letter-spacing:.14em}
+.screen .total{font-family:var(--meter);font-size:clamp(46px,5.4vw,64px);color:var(--amber);text-shadow:0 0 14px rgba(255,176,0,.55);line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden}
+.screen .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px;border-top:1px dashed #2b2a22;padding-top:10px}
+.screen .row div{font-family:var(--meter);color:#d39a1f;font-size:17px;font-variant-numeric:tabular-nums}
+.screen .row small{display:block;font-size:10px;color:#6f5a26;letter-spacing:.12em}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label.f{display:grid;gap:6px;font-family:var(--meter);font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+select,input.txt{font:inherit;font-family:var(--body);font-size:16px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--ink);background:var(--asphalt-3);border:1px solid var(--line);border-radius:6px;padding:12px;width:100%}
+.veh{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.veh button{font:inherit;background:var(--asphalt-3);border:1px solid var(--line);border-radius:8px;padding:0 0 8px;color:var(--ink);cursor:pointer;overflow:hidden;text-align:center;font-size:14px;font-weight:600;transition:border-color .2s}
+.veh button img{width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:6px;filter:grayscale(.5) brightness(.8);transition:filter .3s}
+.veh button[aria-pressed=true]{border-color:var(--amber)}
+.veh button[aria-pressed=true] img{filter:none}
+.toggle{display:flex;gap:10px;align-items:center;font-size:15px;cursor:pointer;color:var(--muted)}
+.toggle input{width:18px;height:18px;accent-color:var(--amber)}
+.msg{margin:0;font-size:14px;background:rgba(255,176,0,.1);border:1px solid rgba(255,176,0,.3);border-radius:8px;padding:12px;color:#e9dfc8}
 
-.svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.svc div{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;display:grid;gap:10px;align-content:start;transition:transform .2s,border-color .2s}
-.svc div:hover{transform:translateY(-4px);border-color:var(--yellow)}
-.svc .ic{width:48px;height:48px;border-radius:14px;background:var(--yellow);display:grid;place-items:center;color:var(--yellow-ink)}
-.svc h3{font-size:21px;font-weight:800}
-.svc p{margin:0;color:var(--muted);font-size:15px}
+/* how it works (pinned on desktop) */
+.how{background:var(--asphalt-2);border-block:1px solid var(--line)}
+.how-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,90px);align-items:start}
+.how-stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);aspect-ratio:4/5;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.how-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .7s,transform 1.4s}
+.how-stage img.on{opacity:1;transform:none}
+.how-stage .phone{position:absolute;left:18px;right:18px;bottom:18px;background:rgba(13,14,17,.9);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:14px}
+.how-stage .phone .dot{width:42px;height:42px;border-radius:50%;background:var(--amber);color:var(--amber-ink);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:20px;flex:none}
+.how-stage .phone b{display:block;font-size:16px}
+.how-stage .phone small{color:var(--muted);font-family:var(--meter);font-size:12px}
+.steps .s{min-height:62vh;display:flex;flex-direction:column;justify-content:center;border-top:1px solid var(--line);padding-block:40px;opacity:.38;transition:opacity .4s}
+.steps .s.on{opacity:1}
+.no-gsap .steps .s{opacity:1;min-height:0}
+.steps .n{font-family:var(--meter);color:var(--amber);font-size:14px;letter-spacing:.12em}
+.steps h3{font-size:clamp(44px,5vw,72px);font-weight:800;margin:10px 0 14px}
+.steps p{color:var(--muted);font-size:19px;max-width:40ch;margin:0}
 
-.fleet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.car{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px;display:grid;gap:14px}
-.car .pic{background:var(--bg);border-radius:16px;padding:22px 14px 10px;position:relative;overflow:hidden}
-.car .pic::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:3px;background:repeating-linear-gradient(90deg,var(--line) 0 18px,transparent 18px 32px)}
-.car svg{width:100%;height:auto;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.car:hover svg{transform:translateX(8px)}
-.car h3{font-size:24px;font-weight:900}
-.specs{display:flex;gap:16px;font-family:var(--mono);font-size:13px;color:var(--muted);flex-wrap:wrap}
-.car .from{font-weight:700}
+/* fleet */
+.fleet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.car{display:grid;gap:16px;min-width:0}
+.car .ph{border-radius:10px;overflow:hidden;aspect-ratio:4/3;background:var(--asphalt-3)}
+.car .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.car:hover .ph img{transform:scale(1.05)}
+.car h3{font-size:40px;font-weight:800}
+.car .specs{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--meter);font-size:14px;color:var(--muted)}
+.car .from{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px;font-size:15px}
+.car .from b{font-family:var(--meter);color:var(--amber);font-size:18px;font-weight:400}
 
-.fares{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
-.ft{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden}
-.ft .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}
-.ft .row:last-child{border-bottom:0}
-.ft .row b{display:block}
-.ft .row small{color:var(--muted)}
-.ft .v{font-family:var(--mono);font-size:18px;font-weight:500;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
-.ft .v input{font:inherit;width:90px;text-align:right;padding:6px 8px;border-radius:8px;border:1.5px solid var(--yellow);background:var(--bg);color:var(--ink)}
-.admin{background:var(--ink);color:var(--bg);border-radius:22px;padding:26px;display:grid;gap:14px}
-.admin h3{font-size:26px;font-weight:900}
-.admin p{margin:0;opacity:.8}
-.admin .btn{justify-self:start}
-.saved{font-family:var(--mono);font-size:13px;color:var(--yellow)}
+/* airport band */
+.band{position:relative;min-height:560px;display:flex;align-items:center;overflow:hidden;isolation:isolate;padding-block:96px}
+.band .bg{position:absolute;inset:-10% 0;z-index:-2}
+.band .bg img{width:100%;height:100%;object-fit:cover}
+.band::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(13,14,17,.94) 0%,rgba(13,14,17,.7) 50%,rgba(13,14,17,.2) 100%)}
+.band .box{max-width:560px}
+.band .fixed{display:inline-flex;gap:16px;align-items:center;margin-top:28px;border:1px solid var(--amber);border-radius:8px;padding:14px 18px}
+.band .fixed b{font-family:var(--meter);font-size:30px;color:var(--amber);font-weight:400}
+.band .fixed small{color:var(--muted);display:block}
 
-.cov{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.cov div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.cov b{font-size:16px}
-.cov span{font-family:var(--mono);font-size:13px;color:var(--muted);white-space:nowrap}
-.cov .bar{display:block;height:4px;border-radius:2px;background:var(--line);margin-top:8px;overflow:hidden}
-.cov .bar i{display:block;height:100%;background:var(--yellow);width:var(--w)}
+/* fares card */
+.fares{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:start}
+.card-tar{background:#f3eee2;color:#1b1914;border-radius:6px;padding:26px 26px 20px;font-family:var(--meter);box-shadow:0 30px 60px -30px rgba(0,0,0,.9);transform:rotate(-1deg);min-width:0}
+.card-tar h3{font-family:var(--display);font-size:30px;color:#1b1914;border-bottom:3px double #1b1914;padding-bottom:10px;margin-bottom:6px}
+.card-tar .sub{font-size:12px;color:#6a6253;margin-bottom:14px}
+.card-tar .r{display:flex;justify-content:space-between;gap:12px;padding-block:10px;border-bottom:1px dashed #b9b09b;font-size:15px;align-items:center}
+.card-tar .r span:first-child{min-width:0}
+.card-tar .r b{font-weight:400;font-size:18px;white-space:nowrap}
+.card-tar .r input{font:inherit;font-size:16px;width:96px;text-align:right;background:#fff;border:1.5px solid #e08a00;border-radius:4px;padding:4px 6px;color:#1b1914}
+.card-tar .stamp{margin-top:14px;font-size:11px;color:#6a6253}
+.admin{display:grid;gap:16px;align-content:start}
+.admin p{color:var(--muted);margin:0;font-size:18px}
+.admin .saved{font-family:var(--meter);color:var(--free);font-size:14px}
 
-.book{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.bookcard{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:var(--shadow);display:grid;gap:14px}
-.ok{margin:0;font-size:14px;background:color-mix(in srgb,var(--yellow) 22%,var(--surface));border-radius:12px;padding:12px}
-details{border-bottom:1px solid var(--line);padding-block:16px}
-summary{cursor:pointer;font-weight:800;font-size:18px}
+/* coverage */
+.cover{position:relative;overflow:hidden;isolation:isolate}
+.cover .bg{position:absolute;inset:0;z-index:-2}
+.cover .bg img{width:100%;height:100%;object-fit:cover;opacity:.35}
+.cover::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--asphalt) 0%,rgba(13,14,17,.55) 40%,var(--asphalt) 100%)}
+.zones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line);margin-top:40px}
+.zones div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:18px 4px;border-bottom:1px solid var(--line)}
+.zones div:nth-child(3n+1),.zones div:nth-child(3n+2){padding-right:24px}
+.zones b{font-family:var(--display);font-size:26px;text-transform:uppercase;font-weight:700}
+.zones span{font-family:var(--meter);color:var(--amber);white-space:nowrap}
+
+/* booking */
+.book{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:start}
+.bookform{background:var(--asphalt-2);border:1px solid var(--line);border-radius:12px;padding:28px;display:grid;gap:14px}
+.ok{margin:0;font-size:14px;background:rgba(56,210,122,.1);border:1px solid rgba(56,210,122,.35);border-radius:8px;padding:12px}
+details{border-bottom:1px solid var(--line);padding-block:18px}
+summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:26px;text-transform:uppercase;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::after{content:"+";color:var(--amber);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
 details p{color:var(--muted);margin:10px 0 0}
-footer{padding-block:32px;color:var(--muted);font-size:13px}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* footer */
+footer{border-top:1px solid var(--line);background:#0a0b0d;padding-block:56px 32px;color:var(--muted);font-size:15px}
+.fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
+.fcols h4{font-family:var(--meter);font-size:12px;letter-spacing:.14em;color:var(--ink);margin:0 0 12px;text-transform:uppercase;font-weight:400}
+.fcols ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.fcols a{color:var(--muted);text-decoration:none}
+.fcols a:hover{color:var(--amber)}
+.fcols .big{font-family:var(--display);font-size:46px;font-weight:800;color:var(--ink);text-transform:uppercase;line-height:.9}
+.credits{border-top:1px solid var(--line);padding-top:20px;font-size:12px;line-height:1.7}
 
 @media (max-width:980px){
-  .hero .wrap,.fares,.book{grid-template-columns:1fr}
-  .svc,.cov{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .fleet{grid-template-columns:1fr}
-  nav{display:none}
+  .nav nav{display:none}
+  .hero .wrap,.calc,.how-grid,.fares,.book{grid-template-columns:1fr}
+  .livecard{justify-self:start}
+  .how-stage{position:relative;top:auto;aspect-ratio:4/3}
+  .steps .s{min-height:0;opacity:1}
+  .fleet{grid-template-columns:1fr 1fr}
+  .zl{font-size:18px}
+  .zones{grid-template-columns:1fr 1fr}
+  .zones div:nth-child(n){padding-right:16px}
+  .fcols{grid-template-columns:1fr 1fr}
 }
-@media (max-width:520px){
-  .svc,.cov{grid-template-columns:1fr}
-  .r2{grid-template-columns:1fr}
-  .result .price{font-size:36px}
+@media (max-width:600px){
+  .callbox span{display:none}
+  .hero{height:auto;min-height:620px;padding-top:120px}
+  .fleet,.zones,.fcols{grid-template-columns:1fr}
+  .fields{grid-template-columns:1fr}
+  .zl{font-size:26px}
+  .st-label{display:none}
+  .card-tar{transform:none}
 }
-@media (prefers-reduced-motion:reduce){.road::before,.road svg{animation:none}html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.how-stage img{transition:none}}
 </style>
 </head>
 <body>
 
 
-<div class="demo">Ejemplo de portfolio · empresa ficticia · tarifas ilustrativas</div>
+<div class="demo">EJEMPLO DE PORTFOLIO · EMPRESA FICTICIA · TARIFAS ILUSTRATIVAS</div>
 
-<header class="top"><div class="wrap">
-  <div class="logo"><span class="badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 16V11l2-5h10l2 5v5M3 16h18M7 19v-3M17 19v-3M9 6V4h6v2"/><circle cx="7.5" cy="13.5" r="1"/><circle cx="16.5" cy="13.5" r="1"/></svg></span>Rumbo Taxis</div>
-  <nav><a href="#tarifa">Calcular tarifa</a><a href="#flota">Flota</a><a href="#tarifas">Tarifas</a><a href="#cobertura">Cobertura</a></nav>
-  <div class="phone"><i></i>Atención 24 h · 0800 000 0000</div>
-</div></header>
-<div class="checker" aria-hidden="true"></div>
+<div class="nav"><div class="wrap">
+  <div class="logo"><span class="sign">TAXI</span>Rumbo</div>
+  <nav><a href="#tarifa">Calcular viaje</a><a href="#como">Cómo funciona</a><a href="#flota">Flota</a><a href="#tarifas">Tarifas</a><a href="#pedir">Pedir</a></nav>
+  <div class="callbox"><i></i><span>Central 24 h ·</span> 0800 000 0000</div>
+</div></div>
 
-<div class="hero" id="tarifa"><div class="wrap">
-  <div>
-    <p class="eyebrow">Taxis las 24 horas</p>
-    <h1>Tu taxi en <mark>5 minutos</mark>, con precio antes de subir.</h1>
-    <p class="lead">Calculá tu viaje, elegí el auto y pedilo por WhatsApp. Choferes identificados, autos con aire y pago con efectivo, tarjeta o transferencia.</p>
-    <a class="btn dark" href="#pedir">Pedir un taxi ahora</a>
-    <div class="live">
-      <div><b id="avail">12</b>taxis libres ahora</div>
-      <div><b>5 min</b>llegada promedio</div>
-      <div><b>24/7</b>todos los días</div>
+<header class="hero" id="hero">
+  <div class="hero-photo"><img src="img/hero.webp" srcset="img/hero-sm.webp 640w, img/hero.webp 1920w" sizes="100vw" alt="Cartel de taxi iluminado sobre el techo de un auto, de noche en la ciudad" fetchpriority="high"></div>
+  <div class="wrap">
+    <div>
+      <p class="kicker">Taxis las 24 horas</p>
+      <h1><span class="ln"><span>Tu taxi,</span></span><span class="ln"><span>en <em>5 minutos</em>.</span></span></h1>
+      <p>Precio claro antes de subir, choferes identificados y autos con aire. De día, de noche y para el aeropuerto.</p>
+      <div class="ctas"><a class="btn" href="#tarifa">Calcular mi viaje</a><a class="btn line" href="#pedir">Pedir ahora</a></div>
     </div>
-    <div class="road" aria-hidden="true"><svg viewBox="0 0 120 40"><rect x="8" y="12" width="104" height="18" rx="6" fill="#ffc21a"/><path d="M28 12l10-10h40l12 10z" fill="#ffc21a"/><path d="M38 11l7-7h13v7zM62 11V4h14l8 7z" fill="#bfe3ff"/><rect x="50" y="0" width="18" height="4" rx="1" fill="#16161a"/><rect x="12" y="19" width="96" height="4" fill="#16161a" opacity=".25"/><circle cx="32" cy="31" r="7" fill="#16161a"/><circle cx="88" cy="31" r="7" fill="#16161a"/><circle cx="32" cy="31" r="3" fill="#888"/><circle cx="88" cy="31" r="3" fill="#888"/><rect x="108" y="16" width="5" height="4" rx="1" fill="#fff6c8"/></svg></div>
+    <aside class="livecard" aria-live="off">
+      <div class="k"><i></i>Ahora en la ciudad</div>
+      <b id="free">14</b><small>taxis libres</small>
+      <div class="eta"><span>Llegada promedio</span><span>5 min</span></div>
+    </aside>
   </div>
+</header>
 
-  <div class="calc" aria-label="Calculador de tarifa">
-    <div class="calc-head"><b>Calculá tu viaje</b><small id="clock">Tarifa diurna</small></div>
+<section id="tarifa"><div class="wrap">
+  <div class="calc-head">
+    <div><p class="kicker">Taxímetro online</p><h2 class="h2" style="margin:0">Sabé cuánto <em>pagás</em><br>antes de subir.</h2></div>
+    <p class="lead">Tocá en el mapa tu zona de origen y después la de destino. El taxímetro calcula el viaje con la tarifa vigente.</p>
+  </div>
+  <div class="calc">
     <div class="map">
-      <span class="maphint">Tocá una zona: primero origen, después destino</span>
-      <svg viewBox="0 0 600 380" id="map" role="img" aria-label="Mapa de zonas de la ciudad">
-        <g class="streets"><path d="M0 130 H600 M0 255 H600 M150 0 V380 M300 0 V380 M450 0 V380 M40 0 L560 380"/></g>
+      <svg viewBox="0 0 800 560" id="map" role="group" aria-label="Mapa de zonas de la ciudad">
+        <rect width="800" height="560" fill="var(--map-bg)"/>
+        <g id="grid" stroke="var(--map-street)" stroke-width="1.5"></g>
+        <path d="M-10 410 C 120 380, 190 450, 300 430 S 470 330, 560 360 S 720 470, 810 440 L 810 470 C 720 500, 640 400, 560 392 S 420 470, 300 462 S 110 412, -10 442 Z" fill="var(--map-water)"/>
+        <path d="M120 80 h120 v80 h-120z M520 120 l90 -10 l20 70 l-100 14z" fill="var(--map-park)"/>
+        <g stroke="var(--map-avenue)" stroke-width="7" fill="none" stroke-linecap="round">
+          <path d="M0 250 C 200 240, 420 270, 800 230"/><path d="M380 0 C 370 180, 400 380, 360 560"/><path d="M60 20 L 720 540"/><path d="M0 120 L 800 160"/>
+        </g>
+        <g fill="#2b2f38"><rect x="650" y="300" width="130" height="10" rx="2" transform="rotate(-18 715 305)"/><rect x="640" y="330" width="130" height="10" rx="2" transform="rotate(-18 705 335)"/></g>
+        <text class="st-label" x="420" y="226">Av. Central</text><text class="st-label" x="392" y="80" transform="rotate(88 392 80)">Av. del Puerto</text><text class="st-label" x="150" y="392">Río Claro</text>
         <g id="zones"></g>
-        <path id="route" d=""/>
-        <g id="car" opacity="0"><circle r="11" fill="#16161a"/><circle r="6" fill="#ffc21a"/></g>
+        <path id="routeGhost" d=""/><path id="route" d=""/>
+        <g id="car" opacity="0"><circle r="13" fill="var(--amber)" opacity=".25"/><circle r="7" fill="var(--amber)"/><circle r="3" fill="var(--amber-ink)"/></g>
       </svg>
+      <span class="hint" id="hint">Tocá tu zona de origen</span>
     </div>
-    <div class="controls">
-      <div class="r2">
+    <div class="meter">
+      <div class="brand"><span>RUMBO · TAXÍMETRO</span><span class="led"><i id="ledDay" class="on"></i>T1 <i id="ledNight"></i>T2</span></div>
+      <div class="screen" aria-live="polite">
+        <div class="lbl">IMPORTE ESTIMADO</div>
+        <div class="total" id="total">$ 0</div>
+        <div class="row"><div><small>KM</small><span id="km">0.0</span></div><div><small>MIN</small><span id="min">0</span></div><div><small>FICHAS</small><span id="fichas">0</span></div></div>
+      </div>
+      <div class="fields">
         <label class="f" for="from">Origen<select id="from"></select></label>
         <label class="f" for="to">Destino<select id="to"></select></label>
       </div>
-      <div class="seg" id="vehicle" role="group" aria-label="Tipo de auto">
-        <button type="button" data-v="std" aria-pressed="true">Estándar</button>
-        <button type="button" data-v="exe" aria-pressed="false">Ejecutivo</button>
-        <button type="button" data-v="van" aria-pressed="false">Van 7</button>
+      <div class="veh" id="veh" role="group" aria-label="Tipo de auto">
+        <button type="button" data-v="std" aria-pressed="true"><img src="img/sedan-sm.webp" alt="" loading="lazy">Estándar</button>
+        <button type="button" data-v="exe" aria-pressed="false"><img src="img/ejecutivo-sm.webp" alt="" loading="lazy">Ejecutivo</button>
+        <button type="button" data-v="van" aria-pressed="false"><img src="img/van-sm.webp" alt="" loading="lazy">Van 7</button>
       </div>
-      <label class="toggle"><input type="checkbox" id="night"> Viaje nocturno (22 a 6 h, +20%)</label>
-    </div>
-    <div class="result" aria-live="polite">
-      <div><div class="k">Precio estimado</div><div class="price" id="price">$ 0</div><div class="meta" id="meta">— km · — min</div></div>
+      <label class="toggle"><input type="checkbox" id="night"> Tarifa nocturna (22 a 6 h)</label>
       <button class="btn" type="button" id="ask">Pedir este viaje</button>
+      <p class="msg" id="msg" hidden></p>
     </div>
-    <p class="msg" id="msg" hidden></p>
-  </div>
-</div></div>
-<div class="checker" aria-hidden="true"></div>
-
-<section id="servicios"><div class="wrap">
-  <p class="eyebrow">Servicios</p>
-  <h2 class="h2">Para cada viaje, un servicio.</h2>
-  <div class="svc">
-    <div><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3v18"/><circle cx="12" cy="12" r="9"/></svg></span><h3>Viajes urbanos</h3><p>Dentro de la ciudad, con precio estimado antes de subir.</p></div>
-    <div><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 16l20-6-2-3-7 2-5-5-2 1 3 5-5 2-2-2-1 1z"/></svg></span><h3>Aeropuerto y terminal</h3><p>Te esperamos con cartel y seguimos tu vuelo por si se atrasa.</p></div>
-    <div><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3"/></svg></span><h3>Empresas</h3><p>Cuenta corriente con factura mensual para tu equipo.</p></div>
-    <div><span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4-9 4zM3 7v10l9 4 9-4V7M12 11v10"/></svg></span><h3>Encomiendas</h3><p>Llevamos paquetes y documentos en el día.</p></div>
   </div>
 </div></section>
 
-<section id="flota" style="padding-top:0"><div class="wrap">
-  <p class="eyebrow">Flota</p>
-  <h2 class="h2">Elegí tu auto.</h2>
-  <p class="sub">Todos con aire acondicionado, seguro de pasajeros y revisión técnica al día.</p>
+<section class="how" id="como"><div class="wrap how-grid">
+  <div class="how-stage" id="stage">
+    <img class="on" src="img/noche.webp" srcset="img/noche-sm.webp 640w, img/noche.webp 1920w" sizes="(max-width:980px) 100vw, 50vw" alt="Avenida de noche con estelas de luz de autos" data-i="0" loading="lazy">
+    <img src="img/ciudad.webp" srcset="img/ciudad-sm.webp 640w, img/ciudad.webp 1280w" sizes="(max-width:980px) 100vw, 50vw" alt="Ciudad de noche vista desde arriba, con calles iluminadas" data-i="1" loading="lazy">
+    <img src="img/movimiento.webp" srcset="img/movimiento-sm.webp 640w, img/movimiento.webp 1280w" sizes="(max-width:980px) 100vw, 50vw" alt="Taxi en movimiento por una avenida iluminada" data-i="2" loading="lazy">
+    <div class="phone" aria-live="polite"><span class="dot" id="pdot">1</span><div><b id="ptitle">Pedido recibido</b><small id="psub">Buscando el taxi más cercano…</small></div></div>
+  </div>
+  <div>
+    <p class="kicker">Cómo funciona</p>
+    <h2 class="h2">Tres pasos.<br><em>Cero vueltas.</em></h2>
+    <div class="steps">
+      <div class="s on" data-i="0"><span class="n">01 · PEDÍS</span><h3>Desde donde estés</h3><p>Por WhatsApp, por teléfono o desde esta web. Nos decís dónde estás y a dónde vas, y te pasamos el precio estimado.</p></div>
+      <div class="s" data-i="1"><span class="n">02 · ASIGNAMOS</span><h3>El auto más cercano</h3><p>La central asigna el taxi libre más próximo y te manda nombre del chofer, modelo y patente.</p></div>
+      <div class="s" data-i="2"><span class="n">03 · LLEGA</span><h3>En minutos</h3><p>Te avisamos cuando el auto está en la puerta. Pagás con efectivo, tarjeta o transferencia.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="flota"><div class="wrap">
+  <div class="calc-head"><div><p class="kicker">Flota</p><h2 class="h2" style="margin:0">Elegí <em>tu auto</em>.</h2></div><p class="lead">Todos con aire acondicionado, seguro de pasajeros y revisión técnica al día.</p></div>
   <div class="fleet" id="fleet"></div>
 </div></section>
 
-<section id="tarifas" style="padding-top:0"><div class="wrap fares">
-  <div>
-    <p class="eyebrow">Tarifas</p>
-    <h2 class="h2">Precios claros.</h2>
-    <div class="ft" id="ft"></div>
-  </div>
+<div class="band" id="aeropuerto">
+  <div class="bg"><img src="img/aeropuerto.webp" srcset="img/aeropuerto-sm.webp 640w, img/aeropuerto.webp 1280w" sizes="100vw" alt="Parada de taxis en la salida de un aeropuerto" loading="lazy"></div>
+  <div class="wrap"><div class="box">
+    <p class="kicker">Aeropuerto y terminal</p>
+    <h2 class="h2">Seguimos <em>tu vuelo</em>.</h2>
+    <p class="lead">Si el vuelo se atrasa, el chofer espera sin costo extra. Te recibe con tu nombre en la salida y te ayuda con las valijas.</p>
+    <div class="fixed"><b id="airPrice">$ 0</b><div><strong>Tarifa fija desde el Centro</strong><small>Auto estándar, hasta 4 pasajeros</small></div></div>
+  </div></div>
+</div>
+
+<section id="tarifas"><div class="wrap fares">
+  <div class="card-tar" id="cardTar"></div>
   <div class="admin">
-    <p class="eyebrow" style="color:var(--yellow)">Panel del administrador</p>
-    <h3>Cambiá tus tarifas sin llamar a nadie.</h3>
-    <p>La web incluye un panel simple para actualizar tarifas, zonas y textos. Probalo: activá el modo edición, cambiá un número y mirá cómo se actualiza el calculador.</p>
-    <button class="btn" type="button" id="edit">Activar modo edición</button>
-    <span class="saved" id="saved" hidden>Cambios aplicados al calculador ✓</span>
+    <p class="kicker">Para la empresa</p>
+    <h2 class="h2" style="font-size:clamp(44px,5.4vw,80px)">Tus tarifas, <em>sin depender de nadie</em>.</h2>
+    <p>La web incluye un panel para actualizar tarifas, zonas y textos. Probalo: activá la edición, cambiá un valor del cuadro tarifario y mirá cómo se recalcula el taxímetro de arriba.</p>
+    <button class="btn" type="button" id="edit" style="justify-self:start">Editar cuadro tarifario</button>
+    <span class="saved" id="saved" hidden>✓ Taxímetro actualizado con la nueva tarifa</span>
   </div>
 </div></section>
 
-<section id="cobertura" style="padding-top:0"><div class="wrap">
-  <p class="eyebrow">Cobertura</p>
-  <h2 class="h2">Llegamos a toda la ciudad.</h2>
-  <p class="sub">Tiempo promedio de llegada desde que pedís el taxi. Fuera de estas zonas, consultanos.</p>
-  <div class="cov" id="cov"></div>
-</div></section>
+<section class="cover" id="cobertura">
+  <div class="bg"><img src="img/ciudad.webp" srcset="img/ciudad-sm.webp 640w, img/ciudad.webp 1280w" sizes="100vw" alt="" loading="lazy"></div>
+  <div class="wrap">
+    <p class="kicker">Cobertura</p>
+    <h2 class="h2">Toda la ciudad,<br><em>las 24 horas</em>.</h2>
+    <p class="lead">Tiempo promedio de llegada desde que pedís. Fuera de estas zonas, consultanos por WhatsApp.</p>
+    <div class="zones" id="zonesList"></div>
+  </div>
+</section>
 
-<section id="pedir" style="padding-top:0"><div class="wrap book">
+<section id="pedir"><div class="wrap book">
   <div>
-    <p class="eyebrow">Pedí tu taxi</p>
-    <h2 class="h2">Ahora o para más tarde.</h2>
-    <p class="sub" style="margin-bottom:24px">Completá tus datos y te confirmamos el auto, la patente y el nombre del chofer.</p>
-    <details open><summary>¿Cómo pago?</summary><p>Efectivo, tarjeta de débito o crédito, o transferencia al finalizar el viaje.</p></details>
-    <details><summary>¿Puedo programar un viaje?</summary><p>Sí, hasta con 7 días de anticipación. Ideal para vuelos tempranos.</p></details>
+    <p class="kicker">Pedí tu taxi</p>
+    <h2 class="h2">Ahora o<br><em>para después</em>.</h2>
+    <details open><summary>¿Cómo pago?</summary><p>Efectivo, tarjeta de débito o crédito, o transferencia al terminar el viaje.</p></details>
+    <details><summary>¿Puedo programar un viaje?</summary><p>Sí, hasta con 7 días de anticipación. Ideal para vuelos de madrugada.</p></details>
     <details><summary>¿Llevan mascotas?</summary><p>Sí, en transportadora o con manta. Avisanos al pedir el viaje.</p></details>
+    <details><summary>¿Tienen cuenta para empresas?</summary><p>Sí, con factura mensual y reporte de viajes por empleado.</p></details>
   </div>
-  <form class="bookcard" id="bookForm">
-    <label class="f" for="bn">Tu nombre<input class="txt" id="bn" required value="Laura Benítez"></label>
-    <label class="f" for="bt">WhatsApp<input class="txt" id="bt" type="tel" required value="+000 000 000 000"></label>
-    <label class="f" for="ba">Dirección de búsqueda<input class="txt" id="ba" required value="Av. Central 450, Centro"></label>
-    <div class="r2">
+  <form class="bookform" id="bookForm">
+    <label class="f" for="bn">Tu nombre<input class="txt" id="bn" required value="Laura Benítez" autocomplete="name"></label>
+    <label class="f" for="bt">WhatsApp<input class="txt" id="bt" type="tel" required value="+000 000 000 000" autocomplete="tel"></label>
+    <label class="f" for="ba">Dirección de búsqueda<input class="txt" id="ba" required value="Av. Central 450, Centro" autocomplete="street-address"></label>
+    <div class="fields">
       <label class="f" for="bw">Cuándo<select id="bw"><option>Ahora</option><option>En 30 minutos</option><option>Programar</option></select></label>
       <label class="f" for="bp">Pasajeros<select id="bp"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5 a 7 (van)</option></select></label>
     </div>
     <button class="btn" type="submit">Confirmar pedido</button>
-    <p class="ok" id="bookOk" hidden>Esto es una demo: el pedido no se envió. En la versión real llega a la central y te responden por WhatsApp.</p>
+    <p class="ok" id="bookOk" hidden>Esto es una demo: el pedido no se envió. En la versión real llega a la central y te confirman por WhatsApp con el chofer y la patente.</p>
   </form>
 </div></section>
 
-<div class="checker" aria-hidden="true"></div>
-<footer><div class="wrap"><span>Rumbo Taxis · Diseño de muestra para portfolio</span><span>Empresa ficticia. Teléfonos y tarifas ilustrativos.</span></div></footer>
+<footer><div class="wrap">
+  <div class="fcols">
+    <div><div class="big">Rumbo<br>Taxis</div><p style="margin:14px 0 0;max-width:30ch">Taxis las 24 horas, con precio claro antes de subir.</p></div>
+    <div><h4>Servicios</h4><ul><li><a href="#tarifa">Viajes urbanos</a></li><li><a href="#aeropuerto">Aeropuerto</a></li><li><a href="#pedir">Empresas</a></li><li><a href="#flota">Flota</a></li></ul></div>
+    <div><h4>Contacto</h4><ul><li>Central: 0800 000 0000</li><li>WhatsApp: +000 000 000 000</li><li>Av. Central 100</li></ul></div>
+    <div><h4>Información</h4><ul><li><a href="#tarifas">Cuadro tarifario</a></li><li><a href="#cobertura">Zonas de cobertura</a></li><li><a href="#pedir">Preguntas frecuentes</a></li></ul></div>
+  </div>
+  <div class="credits">Diseño de muestra para portfolio. Rumbo Taxis es una empresa ficticia; teléfonos, direcciones y tarifas son ilustrativos.<br>
+  Fotos de Wikimedia Commons, recortadas y optimizadas: cartel de taxi, Slyronit (CC BY-SA 4.0) · avenida con estelas de luz, Nan Palmero (CC BY 2.0) · ciudad desde arriba, Femke Ongena (CC0) · taxi en movimiento, Stéphane Bureau Du Colombier (CC BY 3.0) · parada del aeropuerto, John Robert McPherson (CC BY-SA 4.0) · sedán, Jason Lawrence (CC BY 2.0) · ejecutivo, Damian B Oh (CC BY-SA 4.0) · van, Retired electrician (CC0, patente difuminada).</div>
+</div></footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 (function(){
-  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,hasG=!!(window.gsap&&window.ScrollTrigger);
+  if(hasG)gsap.registerPlugin(ScrollTrigger);else document.documentElement.classList.add('no-gsap');
   var fmt=function(n){return '$ '+Math.round(n).toLocaleString('es-AR');};
-  /* zones: polygon points, label anchor, arrival minutes */
+  var NS='http://www.w3.org/2000/svg';
+
+  /* street grid */
+  var grid=document.getElementById('grid'),gs='';
+  for(var x=20;x<800;x+=46)gs+='<line x1="'+x+'" y1="0" x2="'+(x+30)+'" y2="560"/>';
+  for(var y=30;y<560;y+=40)gs+='<line x1="0" y1="'+y+'" x2="800" y2="'+(y-18)+'"/>';
+  grid.innerHTML=gs;
+
+  /* zones */
   var Z=[
-    {id:'cen',n:'Centro',p:'240,140 360,140 360,250 240,250',c:[300,195],eta:4},
-    {id:'nor',n:'Zona Norte',p:'160,20 440,20 440,128 160,128',c:[300,74],eta:7},
-    {id:'sur',n:'Zona Sur',p:'160,262 440,262 440,360 160,360',c:[300,311],eta:8},
-    {id:'oes',n:'Oeste',p:'20,60 148,20 148,250 20,250',c:[84,150],eta:9},
-    {id:'est',n:'Este',p:'372,140 470,140 470,250 372,250',c:[421,195],eta:6},
-    {id:'uni',n:'Universidad',p:'20,262 148,262 148,360 40,360',c:[86,311],eta:10},
-    {id:'ter',n:'Terminal',p:'160,140 228,140 228,250 160,250',c:[194,195],eta:5},
-    {id:'aer',n:'Aeropuerto',p:'482,60 580,90 580,360 452,360 452,262 482,250',c:[520,260],eta:15},
-    {id:'hos',n:'Hospital',p:'452,20 580,20 580,78 482,48',c:[528,40],eta:7}
+    {id:'cen',n:'Centro',p:'300,190 460,200 450,330 300,320',c:[378,262],eta:4},
+    {id:'nor',n:'Norte',p:'250,20 520,30 470,180 290,170',c:[385,105],eta:7},
+    {id:'puer',n:'Puerto',p:'300,340 450,345 430,410 300,420',c:[372,385],eta:6},
+    {id:'oes',n:'Oeste',p:'20,150 280,160 280,330 20,320',c:[150,250],eta:9},
+    {id:'est',n:'Este',p:'480,190 640,200 630,300 470,320',c:[555,255],eta:6},
+    {id:'uni',n:'Universidad',p:'20,20 230,20 240,140 20,140',c:[125,82],eta:10},
+    {id:'sur',n:'Sur',p:'60,470 520,480 520,550 60,550',c:[290,518],eta:9},
+    {id:'aer',n:'Aeropuerto',p:'650,240 790,250 790,400 640,390',c:[715,320],eta:15},
+    {id:'hos',n:'Hospital',p:'540,30 780,30 780,190 550,170',c:[662,108],eta:7}
   ];
-  var VEH={std:{n:'Estándar',k:1,seats:4,bags:2},exe:{n:'Ejecutivo',k:1.35,seats:4,bags:3},van:{n:'Van 7',k:1.6,seats:7,bags:6}};
-  var F={base:1200,km:450,min:60,wait:150};
-  var st={from:'cen',to:'aer',veh:'std',night:false,pick:0};
-  var NS='http://www.w3.org/2000/svg',zg=document.getElementById('zones');
+  var VEH={std:{n:'Estándar',k:1,seats:4,bags:2,img:'sedan'},exe:{n:'Ejecutivo',k:1.4,seats:4,bags:3,img:'ejecutivo'},van:{n:'Van 7',k:1.6,seats:7,bags:6,img:'van'}};
+  var F={bandera:1200,ficha:90,fichaMts:200,espera:150,nocturno:20};
+  var st={from:'cen',to:'aer',veh:'std',night:false,pick:0,km:0};
+  var zg=document.getElementById('zones');
   Z.forEach(function(z){
-    var g=document.createElementNS(NS,'g');var poly=document.createElementNS(NS,'polygon');poly.setAttribute('points',z.p);poly.setAttribute('class','zone');poly.setAttribute('data-id',z.id);
-    poly.setAttribute('tabindex','0');poly.setAttribute('role','button');poly.setAttribute('aria-label',z.n);
-    var t=document.createElementNS(NS,'text');t.setAttribute('x',z.c[0]);t.setAttribute('y',z.c[1]+4);t.setAttribute('class','zlabel');t.textContent=z.n;
-    g.appendChild(poly);g.appendChild(t);zg.appendChild(g);z.poly=poly;z.txt=t;
-    var tap=function(){if(st.pick===0){st.from=z.id;st.pick=1;}else{if(z.id===st.from)return;st.to=z.id;st.pick=0;}sync();};
+    var poly=document.createElementNS(NS,'polygon');poly.setAttribute('points',z.p);poly.setAttribute('class','zone');poly.setAttribute('tabindex','0');poly.setAttribute('role','button');poly.setAttribute('aria-label','Zona '+z.n);
+    var t=document.createElementNS(NS,'text');t.setAttribute('x',z.c[0]);t.setAttribute('y',z.c[1]+4);t.setAttribute('class','zl');t.textContent=z.n;
+    zg.appendChild(poly);zg.appendChild(t);z.poly=poly;z.t=t;
+    var tap=function(){if(st.pick===0){st.from=z.id;st.pick=1;if(st.to===z.id)st.to=Z.find(function(q){return q.id!==z.id;}).id;}else{if(z.id===st.from)return;st.to=z.id;st.pick=0;}sync(true);};
     poly.addEventListener('click',tap);poly.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tap();}});
   });
   var fromS=document.getElementById('from'),toS=document.getElementById('to');
   Z.forEach(function(z){fromS.add(new Option(z.n,z.id));toS.add(new Option(z.n,z.id));});
-  fromS.onchange=function(){st.from=fromS.value;if(st.from===st.to){st.to=Z.find(function(z){return z.id!==st.from;}).id;}sync();};
-  toS.onchange=function(){st.to=toS.value;if(st.to===st.from){st.from=Z.find(function(z){return z.id!==st.to;}).id;}sync();};
-  document.querySelectorAll('#vehicle button').forEach(function(b){b.onclick=function(){st.veh=b.dataset.v;document.querySelectorAll('#vehicle button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});calc();};});
-  var nightCb=document.getElementById('night');
-  var h=new Date().getHours();if(h>=22||h<6){nightCb.checked=true;st.night=true;}
-  nightCb.onchange=function(){st.night=nightCb.checked;calc();};
+  fromS.onchange=function(){st.from=fromS.value;if(st.from===st.to)st.to=Z.find(function(z){return z.id!==st.from;}).id;st.pick=0;sync(true);};
+  toS.onchange=function(){st.to=toS.value;if(st.to===st.from)st.from=Z.find(function(z){return z.id!==st.to;}).id;st.pick=0;sync(true);};
   function zz(id){return Z.find(function(z){return z.id===id;});}
-  var route=document.getElementById('route'),car=document.getElementById('car'),anim=null;
-  function sync(){
+
+  /* taximeter */
+  var ledDay=document.getElementById('ledDay'),ledNight=document.getElementById('ledNight'),nightCb=document.getElementById('night');
+  var h=new Date().getHours();if(h>=22||h<6){nightCb.checked=true;st.night=true;}
+  function fare(km,vk){var fichas=Math.ceil(km*1000/F.fichaMts);var p=(F.bandera+fichas*F.ficha)*vk*(st.night?1+F.nocturno/100:1);return {p:Math.round(p/50)*50,fichas:fichas};}
+  var totalEl=document.getElementById('total'),kmEl=document.getElementById('km'),minEl=document.getElementById('min'),fiEl=document.getElementById('fichas');
+  function show(km){var f=fare(km,VEH[st.veh].k);totalEl.textContent=fmt(f.p);kmEl.textContent=km.toFixed(1);minEl.textContent=Math.round(km*2.3+2);fiEl.textContent=f.fichas;}
+  var route=document.getElementById('route'),ghost=document.getElementById('routeGhost'),car=document.getElementById('car'),raf=null;
+  function sync(animate){
     fromS.value=st.from;toS.value=st.to;
-    Z.forEach(function(z){z.poly.classList.toggle('o',z.id===st.from);z.poly.classList.toggle('d',z.id===st.to);
-      z.txt.classList.toggle('on',z.id===st.from);z.txt.classList.toggle('dk',z.id===st.to);});
-    var a=zz(st.from).c,b=zz(st.to).c,mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy);
-    var cx=mx-dy*.25,cy=my+dx*.25;
-    route.setAttribute('d','M'+a[0]+' '+a[1]+' Q'+cx+' '+cy+' '+b[0]+' '+b[1]);
-    var len=route.getTotalLength();route.style.strokeDasharray=len;
-    if(anim)cancelAnimationFrame(anim);
-    if(reduce){route.style.strokeDashoffset=0;var e=route.getPointAtLength(len);car.setAttribute('transform','translate('+e.x+' '+e.y+')');car.setAttribute('opacity',1);}
-    else{var t0=performance.now();car.setAttribute('opacity',1);(function f(t){var k=Math.min(1,(t-t0)/1100);k=1-Math.pow(1-k,3);route.style.strokeDashoffset=len*(1-k);
-      var pt=route.getPointAtLength(len*k);car.setAttribute('transform','translate('+pt.x+' '+pt.y+')');if(k<1)anim=requestAnimationFrame(f);})(t0);}
-    st.km=Math.max(1.5,L/38*1.25);calc();
-  }
-  var shown=0,pe=document.getElementById('price');
-  function price(){var v=VEH[st.veh];return (F.base+F.km*st.km)*v.k*(st.night?1.2:1);}
-  function calc(){var p=Math.round(price()/50)*50,mins=Math.round(st.km*2.4+3);
-    document.getElementById('meta').textContent=st.km.toFixed(1)+' km · '+mins+' min · '+VEH[st.veh].n;
-    document.getElementById('clock').textContent=st.night?'Tarifa nocturna':'Tarifa diurna';
+    Z.forEach(function(z){var o=z.id===st.from,d=z.id===st.to;z.poly.classList.toggle('o',o);z.poly.classList.toggle('d',d);z.t.classList.toggle('o',o);z.t.classList.toggle('d',d);});
+    document.getElementById('hint').textContent=st.pick===1?'Ahora tocá tu destino':'Origen: '+zz(st.from).n+' → Destino: '+zz(st.to).n+' · tocá otra zona para cambiar';
+    var a=zz(st.from).c,b=zz(st.to).c,mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;
+    var d='M'+a[0]+' '+a[1]+' L'+mx+' '+a[1]+' Q'+(mx+(b[0]-mx)*.15)+' '+my+' '+mx+' '+(my+(b[1]-my)*.3)+' L'+mx+' '+b[1]+' L'+b[0]+' '+b[1];
+    route.setAttribute('d',d);ghost.setAttribute('d',d);
+    var len=route.getTotalLength();st.km=Math.max(1.6,len/42);
+    route.style.strokeDasharray=len;
+    if(raf)cancelAnimationFrame(raf);car.setAttribute('opacity',1);
+    if(!animate||reduce){route.style.strokeDashoffset=0;var e=route.getPointAtLength(len);car.setAttribute('transform','translate('+e.x+' '+e.y+')');show(st.km);return;}
+    var t0=performance.now(),dur=Math.min(2600,900+len*2.2);
+    (function f(t){var k=Math.min(1,(t-t0)/dur),q=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+      route.style.strokeDashoffset=len*(1-q);var p=route.getPointAtLength(len*q);car.setAttribute('transform','translate('+p.x+' '+p.y+')');
+      show(st.km*q);if(k<1)raf=requestAnimationFrame(f);})(t0);
     document.getElementById('msg').hidden=true;
-    if(reduce){pe.textContent=fmt(p);shown=p;return;}
-    var from=shown,t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/450);k=1-Math.pow(1-k,3);shown=from+(p-from)*k;pe.textContent=fmt(shown);if(k<1)requestAnimationFrame(f);})(t0);
-    fleetPrices();}
+  }
+  document.querySelectorAll('#veh button').forEach(function(b){b.onclick=function(){st.veh=b.dataset.v;document.querySelectorAll('#veh button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});show(st.km);};});
+  function setNight(){ledDay.classList.toggle('on',!st.night);ledNight.classList.toggle('on',st.night);}
+  nightCb.onchange=function(){st.night=nightCb.checked;setNight();show(st.km);refresh();};setNight();
   document.getElementById('ask').onclick=function(){var m=document.getElementById('msg');
-    m.innerHTML='<b>Mensaje que se enviaría por WhatsApp:</b> "Hola, quiero un taxi '+VEH[st.veh].n.toLowerCase()+' de '+zz(st.from).n+' a '+zz(st.to).n+'. Precio estimado '+pe.textContent+'." <br><small>Demo: en la versión real se abre WhatsApp con este mensaje listo.</small>';m.hidden=false;};
+    m.innerHTML='<b>Mensaje que se enviaría por WhatsApp:</b><br>"Hola, quiero un taxi '+VEH[st.veh].n.toLowerCase()+' de '+zz(st.from).n+' a '+zz(st.to).n+'. Precio estimado '+totalEl.textContent+'."<br><small>Demo: en la versión real se abre WhatsApp con este mensaje.</small>';m.hidden=false;};
 
-  /* fleet */
-  var CARS={std:{c:'#ffc21a',body:'M10 34h100v-12l-14-4-12-12H40L26 18 10 22z'},exe:{c:'#16161a',body:'M8 34h104v-10l-18-6-14-12H38L22 18 8 24z'},van:{c:'#ffc21a',body:'M8 34h104V14l-6-10H30L14 20 8 24z'}};
-  var fleet=document.getElementById('fleet');
-  Object.keys(VEH).forEach(function(k){var v=VEH[k],c=CARS[k];var d=document.createElement('div');d.className='car';
-    d.innerHTML='<div class="pic"><svg viewBox="0 0 120 46" aria-hidden="true"><path d="'+c.body+'" fill="'+c.c+'" stroke="#16161a" stroke-width="1.5"/><path d="M42 9h18v9H32zM64 9h18l10 9H64z" fill="#bfe3ff" opacity=".9"/><circle cx="30" cy="35" r="8" fill="#16161a"/><circle cx="90" cy="35" r="8" fill="#16161a"/><circle cx="30" cy="35" r="3.5" fill="#999"/><circle cx="90" cy="35" r="3.5" fill="#999"/>'+(k!=='exe'?'<rect x="52" y="2" width="16" height="4" rx="1" fill="#16161a"/>':'')+'</svg></div>'+
-      '<h3>'+v.n+'</h3><div class="specs"><span>'+v.seats+' pasajeros</span><span>'+v.bags+' valijas</span></div><div>Centro → Aeropuerto <span class="from" data-k="'+k+'"></span></div>';
-    fleet.appendChild(d);});
-  function fleetPrices(){var km=Math.max(1.5,Math.hypot(520-300,260-195)/38*1.25);document.querySelectorAll('.from').forEach(function(s){s.textContent=fmt(Math.round((F.base+F.km*km)*VEH[s.dataset.k].k/50)*50);});}
+  /* fleet + airport price */
+  var fleet=document.getElementById('fleet'),airKm=0;
+  (function(){var a=zz('cen').c,b=zz('aer').c;var tmp=document.createElementNS(NS,'path');var mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;
+    tmp.setAttribute('d','M'+a[0]+' '+a[1]+' L'+mx+' '+a[1]+' Q'+(mx+(b[0]-mx)*.15)+' '+my+' '+mx+' '+(my+(b[1]-my)*.3)+' L'+mx+' '+b[1]+' L'+b[0]+' '+b[1]);
+    document.getElementById('map').appendChild(tmp);airKm=Math.max(1.6,tmp.getTotalLength()/42);tmp.remove();})();
+  Object.keys(VEH).forEach(function(k){var v=VEH[k],d=document.createElement('article');d.className='car';
+    d.innerHTML='<div class="ph"><img src="img/'+v.img+'.webp" srcset="img/'+v.img+'-sm.webp 640w, img/'+v.img+'.webp 1280w" sizes="(max-width:600px) 100vw, (max-width:980px) 50vw, 33vw" alt="Auto '+v.n.toLowerCase()+' de la flota" loading="lazy"></div>'+
+      '<h3>'+v.n+'</h3><div class="specs"><span>'+v.seats+' pasajeros</span><span>'+v.bags+' valijas</span><span>Aire acondicionado</span></div>'+
+      '<div class="from"><span>Centro → Aeropuerto</span><b data-k="'+k+'"></b></div>';fleet.appendChild(d);});
+  function refresh(){document.querySelectorAll('.car .from b').forEach(function(b){b.textContent=fmt(fare(airKm,VEH[b.dataset.k].k).p);});
+    var s=st.night;st.night=false;document.getElementById('airPrice').textContent=fmt(fare(airKm,1).p);st.night=s;}
 
-  /* fare table + admin mode */
-  var rows=[{k:'base',n:'Bajada de bandera',d:'Al subir al taxi'},{k:'km',n:'Por kilómetro',d:'Recorrido en ciudad'},{k:'wait',n:'Por minuto de espera',d:'Con el auto detenido'},{k:'night',n:'Recargo nocturno',d:'De 22 a 6 h'}];
-  var ft=document.getElementById('ft'),editing=false;
-  function drawFt(){ft.innerHTML=rows.map(function(r){var val=r.k==='night'?'+20%':(editing?'<input type="number" inputmode="numeric" data-k="'+r.k+'" value="'+F[r.k]+'" aria-label="'+r.n+'">':fmt(F[r.k]));
-    return '<div class="row"><div><b>'+r.n+'</b><small>'+r.d+'</small></div><div class="v">'+val+'</div></div>';}).join('');
-    ft.querySelectorAll('input').forEach(function(i){i.addEventListener('input',function(){var v=parseFloat(i.value);if(isFinite(v)&&v>=0){F[i.dataset.k]=v;calc();var s=document.getElementById('saved');s.hidden=false;}});});}
-  document.getElementById('edit').onclick=function(){editing=!editing;this.textContent=editing?'Guardar y salir':'Activar modo edición';drawFt();if(editing){var i=ft.querySelector('input');i&&i.focus();}};
-  drawFt();
+  /* fare card + admin */
+  var rows=[{k:'bandera',n:'Bajada de bandera',f:fmt},{k:'ficha',n:'Ficha (cada 200 m)',f:fmt},{k:'espera',n:'Minuto de espera',f:fmt},{k:'nocturno',n:'Recargo nocturno (22 a 6 h)',f:function(v){return '+'+v+'%';}}];
+  var card=document.getElementById('cardTar'),editing=false;
+  function drawCard(){card.innerHTML='<h3>Cuadro tarifario</h3><div class="sub">Vigente desde el 1 de noviembre · Tarifas ilustrativas</div>'+rows.map(function(r){
+      return '<div class="r"><span>'+r.n+'</span>'+(editing?'<input type="number" inputmode="numeric" min="0" data-k="'+r.k+'" value="'+F[r.k]+'" aria-label="'+r.n+'">':'<b>'+r.f(F[r.k])+'</b>')+'</div>';}).join('')+
+      '<div class="stamp">Ejecutivo ×1,4 · Van ×1,6 · Se exhibe en cada unidad</div>';
+    card.querySelectorAll('input').forEach(function(i){i.addEventListener('input',function(){var v=parseFloat(i.value);if(isFinite(v)&&v>=0){F[i.dataset.k]=v;show(st.km);refresh();document.getElementById('saved').hidden=false;}});});}
+  document.getElementById('edit').onclick=function(){editing=!editing;this.textContent=editing?'Guardar cambios':'Editar cuadro tarifario';drawCard();if(editing){var i=card.querySelector('input');i&&i.focus();}};
+  drawCard();
 
-  /* coverage */
-  var maxEta=15;document.getElementById('cov').innerHTML=Z.slice().sort(function(a,b){return a.eta-b.eta;}).map(function(z){return '<div><div style="flex:1;min-width:0"><b>'+z.n+'</b><span class="bar"><i style="--w:'+Math.round(100-z.eta/maxEta*70)+'%"></i></span></div><span>~'+z.eta+' min</span></div>';}).join('');
+  /* zones list */
+  document.getElementById('zonesList').innerHTML=Z.slice().sort(function(a,b){return a.eta-b.eta;}).map(function(z){return '<div><b>'+z.n+'</b><span>~'+z.eta+' min</span></div>';}).join('');
 
-  /* live availability ticker */
-  var av=document.getElementById('avail');if(!reduce)setInterval(function(){var n=+av.textContent+(Math.random()<.5?-1:1);av.textContent=Math.max(7,Math.min(16,n));},3500);
-
+  /* live free taxis */
+  var fr=document.getElementById('free');if(!reduce)setInterval(function(){fr.textContent=Math.max(9,Math.min(19,+fr.textContent+(Math.random()<.5?-1:1)));},4000);
   document.getElementById('bookForm').addEventListener('submit',function(e){e.preventDefault();document.getElementById('bookOk').hidden=false;});
-  sync();
+
+  /* how it works: step state */
+  var steps=[].slice.call(document.querySelectorAll('.steps .s')),imgs=[].slice.call(document.querySelectorAll('#stage img'));
+  var P=[['1','Pedido recibido','Buscando el taxi más cercano…'],['2','Chofer asignado: Martín','Sedán negro · patente AB 123 CD · a 3 min'],['3','Tu taxi llegó','Está en la puerta. ¡Buen viaje!']];
+  function setStep(i){steps.forEach(function(s,k){s.classList.toggle('on',k===i);});imgs.forEach(function(m,k){m.classList.toggle('on',k===i);});
+    document.getElementById('pdot').textContent=P[i][0];document.getElementById('ptitle').textContent=P[i][1];document.getElementById('psub').textContent=P[i][2];}
+
+  refresh();sync(false);
+
+  if(hasG){
+    steps.forEach(function(s,i){ScrollTrigger.create({trigger:s,start:'top 60%',end:'bottom 40%',onToggle:function(x){if(x.isActive)setStep(i);}});});
+    ScrollTrigger.create({trigger:'#tarifa',start:'top 55%',once:true,onEnter:function(){sync(true);}});
+    if(!reduce){
+      gsap.from('.hero h1 .ln span',{yPercent:100,duration:1.1,ease:'expo.out',stagger:.12,delay:.15});
+      gsap.to('.hero-photo',{yPercent:12,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+      gsap.to('.band .bg',{yPercent:10,ease:'none',scrollTrigger:{trigger:'.band',start:'top bottom',end:'bottom top',scrub:true}});
+      gsap.utils.toArray('.car .ph').forEach(function(el){gsap.fromTo(el,{clipPath:'inset(8% 8% 8% 8% round 10px)'},{clipPath:'inset(0% 0% 0% 0% round 10px)',ease:'none',scrollTrigger:{trigger:el,start:'top 95%',end:'top 55%',scrub:true}});
+        gsap.fromTo(el.querySelector('img'),{scale:1.18},{scale:1,ease:'none',scrollTrigger:{trigger:el,start:'top 95%',end:'top 40%',scrub:true}});});
+    }
+  }
 })();
 </script>
 
